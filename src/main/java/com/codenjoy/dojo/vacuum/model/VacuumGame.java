@@ -72,11 +72,6 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public boolean tryClean(Point point) {
-        return board.tryClean(point.getX(), point.getY());
-    }
-
-    @Override
     public boolean isAllClear() {
         return board.isAllClear();
     }
@@ -89,6 +84,21 @@ public class VacuumGame implements Field {
     @Override
     public Optional<DirectionSwitcher> getDirectionSwitcher(Point point) {
         return board.getDirectionSwitcher(point);
+    }
+
+    @Override
+    public boolean isCleanPoint(Point point) {
+        return board.isCleanPoint(point);
+    }
+
+    @Override
+    public boolean isDust(Point point) {
+        return board.isDust(point);
+    }
+
+    @Override
+    public void removeDust(Point point) {
+        board.removeDust(point);
     }
 
     public List<Hero> getHeroes() {

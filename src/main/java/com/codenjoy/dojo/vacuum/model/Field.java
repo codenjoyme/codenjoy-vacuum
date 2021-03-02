@@ -37,9 +37,14 @@ public interface Field extends GameField<Player> {
 
     Point getStart();
     boolean isBarrier(Point pt);
-    boolean tryClean(Point point);
     boolean isAllClear();
     int getSize();
 
     Optional<DirectionSwitcher> getDirectionSwitcher(Point point);
+
+    boolean isCleanPoint(Point point);
+
+    boolean isDust(Point point);
+
+    void removeDust(Point point);
 }

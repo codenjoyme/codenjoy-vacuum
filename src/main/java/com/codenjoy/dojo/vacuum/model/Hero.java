@@ -110,12 +110,19 @@ public class Hero extends PlayerHero<Field> implements State<Element, Player> {
             return;
         }
         move(point);
-        
-        field.getDirectionSwitcher(point)
-                .ifPresent(switcher -> this.direction = switcher.getDirection());
 
-        Event cleanedOrNot = field.tryClean(point) ? Event.DUST_CLEANED : Event.TIME_WASTED;
-        events.add(cleanedOrNot);
+        field.getDirectionSwitcher(point)
+                .ifPresent(s -> this.direction = s.getDirection());
+
+        if (field.isCleanPoint(point)) {
+            events.add(Event.TIME_WASTED);
+        }
+
+        if (field.isDust(point))  {
+            field.removeDust(point);
+            events.add(Event.DUST_CLEANED);
+        }
+
         Point next = direction.change(point);
         if (field.isBarrier(next)) {
             direction = null;

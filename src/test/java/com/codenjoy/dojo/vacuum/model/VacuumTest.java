@@ -11,8 +11,7 @@ import static com.codenjoy.dojo.vacuum.services.Event.*;
 import static com.codenjoy.dojo.vacuum.services.Event.DUST_CLEANED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class VacuumTest extends AbstractGameTest {
 
@@ -192,6 +191,26 @@ public class VacuumTest extends AbstractGameTest {
         verify(listener, times(8)).event(eventCaptor.capture());
         assertEquals(ALL_CLEAR, eventCaptor.getAllValues().get(7));
         assertTrue(containsOnly(eventCaptor.getAllValues().subList(0, 6), DUST_CLEANED));
+    }
+
+    @Test
+    public void shouldNotBeFined_whenSteppingOnStartPoint() {
+        givenFl("####" +
+                "#S*#" +
+                "#**#" +
+                "####");
+
+        hero.right();
+        game.tick();
+        hero.left();
+        game.tick();
+
+        assertE("####" +
+                "#O #" +
+                "#**#" +
+                "####");
+
+        verify(listener, never()).event(TIME_WASTED);
     }
 
     // TODO: Discuss, should it be correct behaviour or not (At the time not)

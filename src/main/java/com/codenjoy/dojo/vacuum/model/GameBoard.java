@@ -10,12 +10,12 @@ package com.codenjoy.dojo.vacuum.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -30,6 +30,7 @@ import com.codenjoy.dojo.vacuum.model.items.Start;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class GameBoard {
 
@@ -71,17 +72,6 @@ public class GameBoard {
         return barriers.stream().anyMatch(b -> b.getX() == x && b.getY() == y);
     }
 
-    public boolean tryClean(int x, int y) {
-        Dust dustCell = dust.stream()
-                .filter(d -> d.getX() == x && d.getY() == y)
-                .findFirst()
-                .orElse(null);
-        if (dustCell == null) {
-            return false;
-        }
-        return dust.remove(dustCell);
-    }
-
     public boolean isAllClear() {
         return dust.isEmpty();
     }
@@ -94,5 +84,27 @@ public class GameBoard {
 
     public List<DirectionSwitcher> getDirectionSwitchers() {
         return switchers;
+    }
+
+    public boolean isCleanPoint(Point point) {
+        return Stream.concat(
+                Stream.concat(
+                        Stream.concat(barriers.stream(), dust.stream()),
+                        switchers.stream()
+                ),
+                Stream.of(start)
+        ).noneMatch(p -> p.getX() == point.getX() && p.getY() == point.getY());
+    }
+
+    public boolean isDust(Point point) {
+        return dust.stream().anyMatch(d -> d.getX() == point.getX() && d.getY() == point.getY());
+    }
+
+    public void removeDust(Point point) {
+        Dust dustCell = dust.stream()
+                .filter(d -> d.getX() == point.getX() && d.getY() == point.getY())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("There is no dust at point: " + point));
+        dust.remove(dustCell);
     }
 }
