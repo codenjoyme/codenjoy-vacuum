@@ -72,12 +72,11 @@ public class Levels {
 
     private static Level level3() {
         return Level.generate(
-                "######" +
-                        "# S ##" +
-                        "#*  *#" +
-                        "#** *#" +
-                        "#** *#" +
-                        "######"
+                "#####" +
+                        "# S #" +
+                        "#* *#" +
+                        "#***#" +
+                        "#####"
         );
     }
 
