@@ -38,16 +38,18 @@ public class Level {
     private final Start start;
     private final List<Barrier> barriers;
     private final List<Dust> dust;
-    private final List<DirectionSwitcher> switchers;
-    private final List<DirectionLimiter> limiters;
+    private final List<DirectionSwitcherItem> switchers;
+    private final List<EntryLimiterItem> limiters;
+    private final List<RoundaboutItem> roundabouts;
 
     private Level(
             int size,
             Start start,
             List<Barrier> barriers,
             List<Dust> dust,
-            List<DirectionSwitcher> switchers,
-            List<DirectionLimiter> limiters
+            List<DirectionSwitcherItem> switchers,
+            List<EntryLimiterItem> limiters,
+            List<RoundaboutItem> roundabouts
     ) {
         this.size = size;
         this.start = start;
@@ -55,6 +57,7 @@ public class Level {
         this.dust = Collections.unmodifiableList(dust);
         this.switchers = Collections.unmodifiableList(switchers);
         this.limiters = Collections.unmodifiableList(limiters);
+        this.roundabouts = Collections.unmodifiableList(roundabouts);
     }
 
     public GameBoard newBoard() {
@@ -64,7 +67,8 @@ public class Level {
                 barriers.stream().map(Barrier::new).collect(Collectors.toList()),
                 dust.stream().map(Dust::new).collect(Collectors.toList()),
                 new ArrayList<>(switchers),
-                new ArrayList<>(limiters)
+                new ArrayList<>(limiters),
+                new ArrayList<>(roundabouts)
         );
     }
 
@@ -79,8 +83,9 @@ public class Level {
         Start start = null;
         var barriers = new ArrayList<Barrier>();
         var dust = new ArrayList<Dust>();
-        var switchers = new ArrayList<DirectionSwitcher>();
-        var limiters = new ArrayList<DirectionLimiter>();
+        var switchers = new ArrayList<DirectionSwitcherItem>();
+        var limiters = new ArrayList<EntryLimiterItem>();
+        var roundabouts = new ArrayList<RoundaboutItem>();
 
         for (int i = 0; i < map.length(); i++) {
             char ch = map.charAt(i);
@@ -100,34 +105,46 @@ public class Level {
                     dust.add(new Dust(x, y));
                     break;
                 case SWITCH_LEFT:
-                    switchers.add(DirectionSwitcher.create(Direction.LEFT, x, y));
+                    switchers.add(DirectionSwitcherItem.create(Direction.LEFT, x, y));
                     break;
                 case SWITCH_RIGHT:
-                    switchers.add(DirectionSwitcher.create(Direction.RIGHT, x, y));
+                    switchers.add(DirectionSwitcherItem.create(Direction.RIGHT, x, y));
                     break;
                 case SWITCH_UP:
-                    switchers.add(DirectionSwitcher.create(Direction.UP, x, y));
+                    switchers.add(DirectionSwitcherItem.create(Direction.UP, x, y));
                     break;
                 case SWITCH_DOWN:
-                    switchers.add(DirectionSwitcher.create(Direction.DOWN, x, y));
+                    switchers.add(DirectionSwitcherItem.create(Direction.DOWN, x, y));
                     break;
                 case LIMITER_LEFT:
-                    limiters.add(DirectionLimiter.create(x, y, Direction.LEFT));
+                    limiters.add(EntryLimiterItem.create(x, y, Direction.LEFT));
                     break;
                 case LIMITER_RIGHT:
-                    limiters.add(DirectionLimiter.create(x, y, Direction.RIGHT));
+                    limiters.add(EntryLimiterItem.create(x, y, Direction.RIGHT));
                     break;
                 case LIMITER_UP:
-                    limiters.add(DirectionLimiter.create(x, y, Direction.UP));
+                    limiters.add(EntryLimiterItem.create(x, y, Direction.UP));
                     break;
                 case LIMITER_DOWN:
-                    limiters.add(DirectionLimiter.create(x, y, Direction.DOWN));
+                    limiters.add(EntryLimiterItem.create(x, y, Direction.DOWN));
                     break;
                 case LIMITER_VERTICAL:
-                    limiters.add(DirectionLimiter.create(x, y, Direction.UP, Direction.DOWN));
+                    limiters.add(EntryLimiterItem.create(x, y, Direction.UP, Direction.DOWN));
                     break;
                 case LIMITER_HORIZONTAL:
-                    limiters.add(DirectionLimiter.create(x, y, Direction.LEFT, Direction.RIGHT));
+                    limiters.add(EntryLimiterItem.create(x, y, Direction.LEFT, Direction.RIGHT));
+                    break;
+                case ROUNDABOUT_LEFT_UP:
+                    roundabouts.add(RoundaboutItem.create(x, y, Direction.LEFT, Direction.UP));
+                    break;
+                case ROUNDABOUT_UP_RIGHT:
+                    roundabouts.add(RoundaboutItem.create(x, y, Direction.UP, Direction.RIGHT));
+                    break;
+                case ROUNDABOUT_RIGHT_DOWN:
+                    roundabouts.add(RoundaboutItem.create(x, y, Direction.RIGHT, Direction.DOWN));
+                    break;
+                case ROUNDABOUT_DOWN_LEFT:
+                    roundabouts.add(RoundaboutItem.create(x, y, Direction.DOWN, Direction.LEFT));
                     break;
                 case NONE:
                     break;
@@ -146,7 +163,7 @@ public class Level {
         if (!isMapPassable(map)) {
             throw new IllegalArgumentException("There is no way to pass this level");
         }
-        return new Level(size, start, barriers, dust, switchers, limiters);
+        return new Level(size, start, barriers, dust, switchers, limiters, roundabouts);
     }
 
     private static boolean isMapBorderedCorrectly(String map) {

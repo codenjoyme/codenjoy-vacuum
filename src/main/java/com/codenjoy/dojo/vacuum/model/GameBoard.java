@@ -25,6 +25,7 @@ package com.codenjoy.dojo.vacuum.model;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.items.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,16 +35,18 @@ public class GameBoard {
     private final Start start;
     private final List<Barrier> barriers;
     private final List<Dust> dust;
-    private final List<DirectionSwitcher> switchers;
-    private final List<DirectionLimiter> limiters;
+    private final List<DirectionSwitcherItem> switchers;
+    private final List<EntryLimiterItem> limiters;
+    private final List<RoundaboutItem> roundabouts;
 
     public GameBoard(
             int size,
             Start start,
             List<Barrier> barriers,
             List<Dust> dust,
-            List<DirectionSwitcher> switchers,
-            List<DirectionLimiter> limiters
+            List<DirectionSwitcherItem> switchers,
+            List<EntryLimiterItem> limiters,
+            List<RoundaboutItem> roundabouts
     ) {
         this.size = size;
         this.start = start;
@@ -51,6 +54,7 @@ public class GameBoard {
         this.dust = dust;
         this.switchers = switchers;
         this.limiters = limiters;
+        this.roundabouts = roundabouts;
     }
 
     public int getSize() {
@@ -81,13 +85,13 @@ public class GameBoard {
         return dust.isEmpty();
     }
 
-    public Optional<DirectionSwitcher> getDirectionSwitcher(Point point) {
+    public Optional<DirectionSwitcherItem> getDirectionSwitcher(Point point) {
         return switchers.stream()
                 .filter(s -> s.getX() == point.getX() && s.getY() == point.getY())
                 .findFirst();
     }
 
-    public List<DirectionSwitcher> getDirectionSwitchers() {
+    public List<DirectionSwitcherItem> getDirectionSwitchers() {
         return switchers;
     }
 
@@ -96,7 +100,8 @@ public class GameBoard {
                 && !barriers.contains(point)
                 && !dust.contains(point)
                 && !switchers.contains(point)
-                && !limiters.contains(point);
+                && !limiters.contains(point)
+                && !roundabouts.contains(point);
     }
 
     public boolean isDust(Point point) {
@@ -111,13 +116,17 @@ public class GameBoard {
         dust.remove(dustCell);
     }
 
-    public Optional<DirectionLimiter> getDirectionLimiter(Point point) {
+    public Optional<EntryLimiterItem> getDirectionLimiter(Point point) {
         return limiters.stream()
                 .filter(l -> l.equals(point))
                 .findFirst();
     }
 
-    public List<DirectionLimiter> getDirectionLimiters() {
+    public List<EntryLimiterItem> getDirectionLimiters() {
         return limiters;
+    }
+
+    public List<RoundaboutItem> getRoundabouts() {
+        return roundabouts;
     }
 }

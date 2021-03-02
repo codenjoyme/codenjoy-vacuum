@@ -25,8 +25,9 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.printer.BoardReader;
-import com.codenjoy.dojo.vacuum.model.items.DirectionLimiter;
-import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcher;
+import com.codenjoy.dojo.vacuum.model.items.EntryLimiterItem;
+import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcherItem;
+import com.codenjoy.dojo.vacuum.model.items.RoundaboutItem;
 import com.codenjoy.dojo.vacuum.model.level.Level;
 
 import java.util.LinkedList;
@@ -83,7 +84,7 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<DirectionSwitcher> getDirectionSwitcher(Point point) {
+    public Optional<DirectionSwitcherItem> getDirectionSwitcher(Point point) {
         return board.getDirectionSwitcher(point);
     }
 
@@ -103,8 +104,13 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<DirectionLimiter> getDirectionLimiter(Point point) {
+    public Optional<EntryLimiterItem> getDirectionLimiter(Point point) {
         return board.getDirectionLimiter(point);
+    }
+
+    @Override
+    public Optional<RoundaboutItem> getRoundabout(Point destination) {
+        return board.getRoundabouts().stream().filter(r -> r.equals(destination)).findFirst();
     }
 
     public List<Hero> getHeroes() {
@@ -144,6 +150,7 @@ public class VacuumGame implements Field {
                     addAll(board.getDust());
                     addAll(board.getDirectionSwitchers());
                     addAll(board.getDirectionLimiters());
+                    addAll(board.getRoundabouts());
                     add(board.getStart());
                 }};
             }

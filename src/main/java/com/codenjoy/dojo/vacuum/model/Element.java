@@ -49,7 +49,12 @@ public enum Element implements CharElements {
     LIMITER_UP('╨'),
     LIMITER_DOWN('╥'),
     LIMITER_VERTICAL('║'),
-    LIMITER_HORIZONTAL('═');
+    LIMITER_HORIZONTAL('═'),
+
+    ROUNDABOUT_LEFT_UP('┘'),
+    ROUNDABOUT_UP_RIGHT('└'),
+    ROUNDABOUT_RIGHT_DOWN('┌'),
+    ROUNDABOUT_DOWN_LEFT('┐');
 
     final char ch;
 

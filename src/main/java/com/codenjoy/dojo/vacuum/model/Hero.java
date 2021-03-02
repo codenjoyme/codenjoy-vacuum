@@ -27,10 +27,12 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.State;
 import com.codenjoy.dojo.services.multiplayer.PlayerHero;
+import com.codenjoy.dojo.vacuum.model.items.RoundaboutItem;
 import com.codenjoy.dojo.vacuum.services.Event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Это реализация героя. Обрати внимание, что он имплементит {@see Joystick}, а значит может быть управляем фреймворком
@@ -109,11 +111,17 @@ public class Hero extends PlayerHero<Field> implements State<Element, Player> {
                 .map(l -> l.canEnterFrom(this))
                 .orElse(true);
 
+        Optional<RoundaboutItem> roundabout = field.getRoundabout(destination);
+
+        isNotEntryLimited &= roundabout.map(r -> r.canEnterFrom(this))
+                .orElse(true);
+
         if (field.isBarrier(destination) || !isNotEntryLimited) {
             direction = null;
             return;
         }
 
+        roundabout.ifPresent(r -> this.direction = r.enterFrom(this));
         move(destination);
 
         field.getDirectionSwitcher(destination)
@@ -123,7 +131,7 @@ public class Hero extends PlayerHero<Field> implements State<Element, Player> {
             events.add(Event.TIME_WASTED);
         }
 
-        if (field.isDust(destination))  {
+        if (field.isDust(destination)) {
             field.removeDust(destination);
             events.add(Event.DUST_CLEANED);
         }
