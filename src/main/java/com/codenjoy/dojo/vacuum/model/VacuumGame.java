@@ -25,10 +25,12 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.printer.BoardReader;
+import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcher;
 import com.codenjoy.dojo.vacuum.model.level.Level;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -58,7 +60,7 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public boolean canGoTo(Point destination) {
+    public boolean isBarrier(Point destination) {
         int x = destination.getX();
         int y = destination.getY();
         return board.isInBounds(x, y) && board.isFreeToGo(x, y);
@@ -82,6 +84,11 @@ public class VacuumGame implements Field {
     @Override
     public int getSize() {
         return board.getSize();
+    }
+
+    @Override
+    public Optional<DirectionSwitcher> getDirectionSwitcher(Point point) {
+        return board.getDirectionSwitcher(point);
     }
 
     public List<Hero> getHeroes() {
@@ -119,6 +126,7 @@ public class VacuumGame implements Field {
                     addAll(getHeroes());
                     addAll(board.getBarriers());
                     addAll(board.getDust());
+                    addAll(board.getDirectionSwitchers());
                     add(board.getStart());
                 }};
             }

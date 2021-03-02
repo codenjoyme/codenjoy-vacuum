@@ -22,11 +22,10 @@ package com.codenjoy.dojo.vacuum.model.level;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.vacuum.model.Element;
 import com.codenjoy.dojo.vacuum.model.GameBoard;
-import com.codenjoy.dojo.vacuum.model.items.Barrier;
-import com.codenjoy.dojo.vacuum.model.items.Dust;
-import com.codenjoy.dojo.vacuum.model.items.Start;
+import com.codenjoy.dojo.vacuum.model.items.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,12 +38,14 @@ public class Level {
     private final Start start;
     private final List<Barrier> barriers;
     private final List<Dust> dust;
+    private final List<DirectionSwitcher> switchers;
 
-    private Level(int size, Start start, List<Barrier> barriers, List<Dust> dust) {
+    private Level(int size, Start start, List<Barrier> barriers, List<Dust> dust, List<DirectionSwitcher> switchers) {
         this.size = size;
         this.start = start;
         this.barriers = Collections.unmodifiableList(barriers);
         this.dust = Collections.unmodifiableList(dust);
+        this.switchers = Collections.unmodifiableList(switchers);
     }
 
     public GameBoard newBoard() {
@@ -52,7 +53,8 @@ public class Level {
                 size,
                 new Start(start),
                 barriers.stream().map(Barrier::new).collect(Collectors.toList()),
-                dust.stream().map(Dust::new).collect(Collectors.toList())
+                dust.stream().map(Dust::new).collect(Collectors.toList()),
+                new ArrayList<>(switchers)
         );
     }
 
@@ -67,6 +69,7 @@ public class Level {
         Start start = null;
         var barriers = new ArrayList<Barrier>();
         var dust = new ArrayList<Dust>();
+        var switchers = new ArrayList<DirectionSwitcher>();
 
         for (int i = 0; i < map.length(); i++) {
             char ch = map.charAt(i);
@@ -85,6 +88,18 @@ public class Level {
                 case DUST:
                     dust.add(new Dust(x, y));
                     break;
+                case SWITCH_LEFT:
+                    switchers.add(DirectionSwitcher.create(Direction.LEFT, x, y));
+                    break;
+                case SWITCH_RIGHT:
+                    switchers.add(DirectionSwitcher.create(Direction.RIGHT, x, y));
+                    break;
+                case SWITCH_UP:
+                    switchers.add(DirectionSwitcher.create(Direction.UP, x, y));
+                    break;
+                case SWITCH_DOWN:
+                    switchers.add(DirectionSwitcher.create(Direction.DOWN, x, y));
+                    break;
                 case NONE:
                     break;
                 case VACUUM:
@@ -102,7 +117,7 @@ public class Level {
         if (!isMapPassable(map)) {
             throw new IllegalArgumentException("There is no way to pass this level");
         }
-        return new Level(size, start, barriers, dust);
+        return new Level(size, start, barriers, dust, switchers);
     }
 
     private static boolean isMapBorderedCorrectly(String map) {

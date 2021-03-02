@@ -22,11 +22,14 @@ package com.codenjoy.dojo.vacuum.model;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.items.Barrier;
+import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcher;
 import com.codenjoy.dojo.vacuum.model.items.Dust;
 import com.codenjoy.dojo.vacuum.model.items.Start;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GameBoard {
 
@@ -34,12 +37,14 @@ public class GameBoard {
     private final Start start;
     private final List<Barrier> barriers;
     private final List<Dust> dust;
+    private final List<DirectionSwitcher> switchers;
 
-    public GameBoard(int size, Start start, List<Barrier> barriers, List<Dust> dust) {
+    public GameBoard(int size, Start start, List<Barrier> barriers, List<Dust> dust, List<DirectionSwitcher> switchers) {
         this.size = size;
         this.start = start;
         this.barriers = barriers;
         this.dust = dust;
+        this.switchers = switchers;
     }
 
     public int getSize() {
@@ -79,5 +84,15 @@ public class GameBoard {
 
     public boolean isAllClear() {
         return dust.isEmpty();
+    }
+
+    public Optional<DirectionSwitcher> getDirectionSwitcher(Point point) {
+        return switchers.stream()
+                .filter(s -> s.getX() == point.getX() && s.getY() == point.getY())
+                .findFirst();
+    }
+
+    public List<DirectionSwitcher> getDirectionSwitchers() {
+        return switchers;
     }
 }

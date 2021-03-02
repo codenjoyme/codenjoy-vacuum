@@ -32,10 +32,17 @@ import com.codenjoy.dojo.services.printer.CharElements;
 public enum Element implements CharElements {
 
     NONE(' '),
-    BARRIER('#'),
+
     VACUUM('O'),
     START('S'),
-    DUST('*');
+
+    BARRIER('#'),
+    DUST('*'),
+
+    SWITCH_LEFT('←'),
+    SWITCH_RIGHT('→'),
+    SWITCH_UP('↑'),
+    SWITCH_DOWN('↓');
 
     final char ch;
 

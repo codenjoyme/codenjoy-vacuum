@@ -25,6 +25,9 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.multiplayer.GameField;
+import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcher;
+
+import java.util.Optional;
 
 /**
  * Так случилось что доска знает про героя, а герой про доску.
@@ -33,8 +36,10 @@ import com.codenjoy.dojo.services.multiplayer.GameField;
 public interface Field extends GameField<Player> {
 
     Point getStart();
-    boolean canGoTo(Point pt);
+    boolean isBarrier(Point pt);
     boolean tryClean(Point point);
     boolean isAllClear();
     int getSize();
+
+    Optional<DirectionSwitcher> getDirectionSwitcher(Point point);
 }

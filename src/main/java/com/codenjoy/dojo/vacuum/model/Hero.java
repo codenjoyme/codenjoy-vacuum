@@ -95,23 +95,32 @@ public class Hero extends PlayerHero<Field> implements State<Element, Player> {
         }
 
         if (direction != null) {
-            Point to = direction.change(this.copy());
-
-            if (field.canGoTo(to)) {
-                direction = null;
-            } else {
-                move(to);
-                Event cleanedOrNot = field.tryClean(to) ? Event.DUST_CLEANED : Event.TIME_WASTED;
-                events.add(cleanedOrNot);
-                Point next = direction.change(to);
-                if (field.canGoTo(next)) {
-                    direction = null;
-                }
-            }
+            Point destination = direction.change(this.copy());
+            goTo(destination);
         }
+
         if (field.isAllClear()) {
             events.add(Event.ALL_CLEAR);
         }
+    }
+
+    private void goTo(Point point) {
+        if (field.isBarrier(point)) {
+            direction = null;
+            return;
+        }
+        move(point);
+        
+        field.getDirectionSwitcher(point)
+                .ifPresent(switcher -> this.direction = switcher.getDirection());
+
+        Event cleanedOrNot = field.tryClean(point) ? Event.DUST_CLEANED : Event.TIME_WASTED;
+        events.add(cleanedOrNot);
+        Point next = direction.change(point);
+        if (field.isBarrier(next)) {
+            direction = null;
+        }
+
     }
 
     public List<Event> getEvents() {
