@@ -23,14 +23,10 @@ package com.codenjoy.dojo.vacuum.model;
  */
 
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.model.items.Barrier;
-import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcher;
-import com.codenjoy.dojo.vacuum.model.items.Dust;
-import com.codenjoy.dojo.vacuum.model.items.Start;
+import com.codenjoy.dojo.vacuum.model.items.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class GameBoard {
 
@@ -39,13 +35,22 @@ public class GameBoard {
     private final List<Barrier> barriers;
     private final List<Dust> dust;
     private final List<DirectionSwitcher> switchers;
+    private final List<DirectionLimiter> limiters;
 
-    public GameBoard(int size, Start start, List<Barrier> barriers, List<Dust> dust, List<DirectionSwitcher> switchers) {
+    public GameBoard(
+            int size,
+            Start start,
+            List<Barrier> barriers,
+            List<Dust> dust,
+            List<DirectionSwitcher> switchers,
+            List<DirectionLimiter> limiters
+    ) {
         this.size = size;
         this.start = start;
         this.barriers = barriers;
         this.dust = dust;
         this.switchers = switchers;
+        this.limiters = limiters;
     }
 
     public int getSize() {
@@ -68,7 +73,7 @@ public class GameBoard {
         return x >= 0 && x < size && y >= 0 && y < size;
     }
 
-    public boolean isFreeToGo(int x, int y) {
+    public boolean isBarrier(int x, int y) {
         return barriers.stream().anyMatch(b -> b.getX() == x && b.getY() == y);
     }
 
@@ -87,24 +92,32 @@ public class GameBoard {
     }
 
     public boolean isCleanPoint(Point point) {
-        return Stream.concat(
-                Stream.concat(
-                        Stream.concat(barriers.stream(), dust.stream()),
-                        switchers.stream()
-                ),
-                Stream.of(start)
-        ).noneMatch(p -> p.getX() == point.getX() && p.getY() == point.getY());
+        return !start.equals(point)
+                && !barriers.contains(point)
+                && !dust.contains(point)
+                && !switchers.contains(point)
+                && !limiters.contains(point);
     }
 
     public boolean isDust(Point point) {
-        return dust.stream().anyMatch(d -> d.getX() == point.getX() && d.getY() == point.getY());
+        return dust.stream().anyMatch(d -> d.equals(point));
     }
 
     public void removeDust(Point point) {
         Dust dustCell = dust.stream()
-                .filter(d -> d.getX() == point.getX() && d.getY() == point.getY())
+                .filter(d -> d.equals(point))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("There is no dust at point: " + point));
         dust.remove(dustCell);
+    }
+
+    public Optional<DirectionLimiter> getDirectionLimiter(Point point) {
+        return limiters.stream()
+                .filter(l -> l.equals(point))
+                .findFirst();
+    }
+
+    public List<DirectionLimiter> getDirectionLimiters() {
+        return limiters;
     }
 }

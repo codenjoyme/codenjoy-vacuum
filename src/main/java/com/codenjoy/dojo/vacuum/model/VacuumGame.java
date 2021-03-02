@@ -25,6 +25,7 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.printer.BoardReader;
+import com.codenjoy.dojo.vacuum.model.items.DirectionLimiter;
 import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcher;
 import com.codenjoy.dojo.vacuum.model.level.Level;
 
@@ -63,7 +64,7 @@ public class VacuumGame implements Field {
     public boolean isBarrier(Point destination) {
         int x = destination.getX();
         int y = destination.getY();
-        return board.isInBounds(x, y) && board.isFreeToGo(x, y);
+        return board.isInBounds(x, y) && board.isBarrier(x, y);
     }
 
     @Override
@@ -99,6 +100,11 @@ public class VacuumGame implements Field {
     @Override
     public void removeDust(Point point) {
         board.removeDust(point);
+    }
+
+    @Override
+    public Optional<DirectionLimiter> getDirectionLimiter(Point point) {
+        return board.getDirectionLimiter(point);
     }
 
     public List<Hero> getHeroes() {
@@ -137,6 +143,7 @@ public class VacuumGame implements Field {
                     addAll(board.getBarriers());
                     addAll(board.getDust());
                     addAll(board.getDirectionSwitchers());
+                    addAll(board.getDirectionLimiters());
                     add(board.getStart());
                 }};
             }

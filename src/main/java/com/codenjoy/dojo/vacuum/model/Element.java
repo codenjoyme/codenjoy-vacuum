@@ -42,7 +42,14 @@ public enum Element implements CharElements {
     SWITCH_LEFT('←'),
     SWITCH_RIGHT('→'),
     SWITCH_UP('↑'),
-    SWITCH_DOWN('↓');
+    SWITCH_DOWN('↓'),
+
+    LIMITER_LEFT('╡'),
+    LIMITER_RIGHT('╞'),
+    LIMITER_UP('╨'),
+    LIMITER_DOWN('╥'),
+    LIMITER_VERTICAL('║'),
+    LIMITER_HORIZONTAL('═');
 
     final char ch;
 

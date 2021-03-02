@@ -10,12 +10,12 @@ package com.codenjoy.dojo.vacuum.model.level;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -39,13 +39,22 @@ public class Level {
     private final List<Barrier> barriers;
     private final List<Dust> dust;
     private final List<DirectionSwitcher> switchers;
+    private final List<DirectionLimiter> limiters;
 
-    private Level(int size, Start start, List<Barrier> barriers, List<Dust> dust, List<DirectionSwitcher> switchers) {
+    private Level(
+            int size,
+            Start start,
+            List<Barrier> barriers,
+            List<Dust> dust,
+            List<DirectionSwitcher> switchers,
+            List<DirectionLimiter> limiters
+    ) {
         this.size = size;
         this.start = start;
         this.barriers = Collections.unmodifiableList(barriers);
         this.dust = Collections.unmodifiableList(dust);
         this.switchers = Collections.unmodifiableList(switchers);
+        this.limiters = Collections.unmodifiableList(limiters);
     }
 
     public GameBoard newBoard() {
@@ -54,7 +63,8 @@ public class Level {
                 new Start(start),
                 barriers.stream().map(Barrier::new).collect(Collectors.toList()),
                 dust.stream().map(Dust::new).collect(Collectors.toList()),
-                new ArrayList<>(switchers)
+                new ArrayList<>(switchers),
+                new ArrayList<>(limiters)
         );
     }
 
@@ -70,6 +80,7 @@ public class Level {
         var barriers = new ArrayList<Barrier>();
         var dust = new ArrayList<Dust>();
         var switchers = new ArrayList<DirectionSwitcher>();
+        var limiters = new ArrayList<DirectionLimiter>();
 
         for (int i = 0; i < map.length(); i++) {
             char ch = map.charAt(i);
@@ -100,6 +111,24 @@ public class Level {
                 case SWITCH_DOWN:
                     switchers.add(DirectionSwitcher.create(Direction.DOWN, x, y));
                     break;
+                case LIMITER_LEFT:
+                    limiters.add(DirectionLimiter.create(x, y, Direction.LEFT));
+                    break;
+                case LIMITER_RIGHT:
+                    limiters.add(DirectionLimiter.create(x, y, Direction.RIGHT));
+                    break;
+                case LIMITER_UP:
+                    limiters.add(DirectionLimiter.create(x, y, Direction.UP));
+                    break;
+                case LIMITER_DOWN:
+                    limiters.add(DirectionLimiter.create(x, y, Direction.DOWN));
+                    break;
+                case LIMITER_VERTICAL:
+                    limiters.add(DirectionLimiter.create(x, y, Direction.UP, Direction.DOWN));
+                    break;
+                case LIMITER_HORIZONTAL:
+                    limiters.add(DirectionLimiter.create(x, y, Direction.LEFT, Direction.RIGHT));
+                    break;
                 case NONE:
                     break;
                 case VACUUM:
@@ -117,7 +146,7 @@ public class Level {
         if (!isMapPassable(map)) {
             throw new IllegalArgumentException("There is no way to pass this level");
         }
-        return new Level(size, start, barriers, dust, switchers);
+        return new Level(size, start, barriers, dust, switchers, limiters);
     }
 
     private static boolean isMapBorderedCorrectly(String map) {
@@ -135,4 +164,5 @@ public class Level {
         // TODO: Implement this
         return true;
     }
+
 }

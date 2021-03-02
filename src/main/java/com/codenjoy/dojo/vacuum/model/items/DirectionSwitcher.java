@@ -22,7 +22,7 @@ public class DirectionSwitcher extends AbstractItem {
                 element = Element.SWITCH_DOWN;
                 break;
             default:
-                throw new IllegalArgumentException("Direction " + direction + " not supported by direction switchers");
+                throw new IllegalArgumentException("Direction " + direction + " is not supported by direction switchers");
         }
         return new DirectionSwitcher(element, direction, x, y);
     }

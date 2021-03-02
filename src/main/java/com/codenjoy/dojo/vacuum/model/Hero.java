@@ -104,26 +104,31 @@ public class Hero extends PlayerHero<Field> implements State<Element, Player> {
         }
     }
 
-    private void goTo(Point point) {
-        if (field.isBarrier(point)) {
+    private void goTo(Point destination) {
+        Boolean isNotEntryLimited = field.getDirectionLimiter(destination)
+                .map(l -> l.canEnterFrom(this))
+                .orElse(true);
+
+        if (field.isBarrier(destination) || !isNotEntryLimited) {
             direction = null;
             return;
         }
-        move(point);
 
-        field.getDirectionSwitcher(point)
+        move(destination);
+
+        field.getDirectionSwitcher(destination)
                 .ifPresent(s -> this.direction = s.getDirection());
 
-        if (field.isCleanPoint(point)) {
+        if (field.isCleanPoint(destination)) {
             events.add(Event.TIME_WASTED);
         }
 
-        if (field.isDust(point))  {
-            field.removeDust(point);
+        if (field.isDust(destination))  {
+            field.removeDust(destination);
             events.add(Event.DUST_CLEANED);
         }
 
-        Point next = direction.change(point);
+        Point next = direction.change(destination);
         if (field.isBarrier(next)) {
             direction = null;
         }
