@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
+
     private static final int RESTART_ACTION = 0;
 
     private Direction direction;
@@ -51,32 +52,30 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
         this.field = field;
     }
 
+    public void tryChange(Direction input) {
+        if (direction == null) {
+            direction = input;
+        }
+    }
+
     @Override
     public void down() {
-        if (direction == null) {
-            direction = Direction.DOWN;
-        }
+        tryChange(Direction.DOWN);
     }
 
     @Override
     public void up() {
-        if (direction == null) {
-            direction = Direction.UP;
-        }
+        tryChange(Direction.UP);
     }
 
     @Override
     public void left() {
-        if (direction == null) {
-            direction = Direction.LEFT;
-        }
+        tryChange(Direction.LEFT);
     }
 
     @Override
     public void right() {
-        if (direction == null) {
-            direction = Direction.RIGHT;
-        }
+        tryChange(Direction.RIGHT);
     }
 
     @Override
