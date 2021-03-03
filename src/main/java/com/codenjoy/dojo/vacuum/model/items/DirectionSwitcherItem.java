@@ -50,7 +50,7 @@ public class DirectionSwitcherItem extends AbstractItem {
         this.switcher = new DirectionSwitcher(pt, elements.get(element));
     }
 
-    public Direction getDirection() {
-        return switcher.getDirection();
+    public Direction direction() {
+        return switcher.direction();
     }
 }

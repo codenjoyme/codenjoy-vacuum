@@ -59,8 +59,8 @@ public class Board extends AbstractBoard<Elements> {
         return isAt(x, y, BARRIER);
     }
 
-    public boolean isBarrierAt(Point point) {
-        return isAt(point, BARRIER);
+    public boolean isBarrierAt(Point pt) {
+        return isAt(pt, BARRIER);
     }
 
     @Override

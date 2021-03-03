@@ -39,15 +39,15 @@ public interface Field extends GameField<Player> {
 
     boolean isAllClear();
 
-    boolean isDust(Point point);
+    boolean isDust(Point pt);
 
-    void removeDust(Point point);
+    void removeDust(Point pt);
 
-    boolean isCleanPoint(Point point);
+    boolean isCleanPoint(Point pt);
 
-    Optional<DirectionSwitcherItem> getDirectionSwitcher(Point point);
+    Optional<DirectionSwitcherItem> switcher(Point pt);
 
-    Optional<EntryLimiterItem> getDirectionLimiter(Point point);
+    Optional<EntryLimiterItem> limiter(Point pt);
 
-    Optional<RoundaboutItem> getRoundabout(Point destination);
+    Optional<RoundaboutItem> roundabout(Point destination);
 }

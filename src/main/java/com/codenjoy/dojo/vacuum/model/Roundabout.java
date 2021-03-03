@@ -26,11 +26,9 @@ package com.codenjoy.dojo.vacuum.model;
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
-import com.google.common.collect.Sets;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -45,25 +43,25 @@ public class Roundabout extends PointImpl {
         this.limiter = new EntryLimiter(pt, Arrays.asList(directions));
     }
 
-    public boolean canEnterFrom(Point point) {
-        return limiter.canEnterFrom(point);
+    public boolean canEnterFrom(Point pt) {
+        return limiter.canEnterFrom(pt);
     }
 
-    public Direction enterFrom(Point point) {
-        List<Direction> entries = limiter.getPermitted();
+    public Direction enterFrom(Point pt) {
+        List<Direction> entries = limiter.permitted();
         if (entries.size() > 2) {
             throw new IllegalStateException("Roundabout can treat exactly 2 directions");
         }
-        Direction exitDirection = null;
-        if (entries.get(0).change(this).equals(point)) {
-            exitDirection = entries.get(1);
-        } else if (entries.get(1).change(this).equals(point)) {
-            exitDirection = entries.get(0);
+        Direction exit;
+        if (entries.get(0).change(this).equals(pt)) {
+            exit = entries.get(1);
+        } else if (entries.get(1).change(this).equals(pt)) {
+            exit = entries.get(0);
         } else {
-            throw new IllegalArgumentException("Entry from point " + point + " is prohibited");
+            throw new IllegalArgumentException("Entry from point " + pt + " is prohibited");
         }
         rotate();
-        return exitDirection;
+        return exit;
     }
 
     private void rotate() {
@@ -71,13 +69,13 @@ public class Roundabout extends PointImpl {
     }
 
     private void rotate(boolean counter) {
-        List<Direction> rotated = limiter.getPermitted().stream()
+        List<Direction> rotated = limiter.permitted().stream()
                 .map(e -> counter ? e.counterClockwise() : e.clockwise())
                 .collect(toList());
-        limiter.setPermitted(rotated);
+        limiter.permitted(rotated);
     }
 
-    public List<Direction> getDirections() {
-        return limiter.getPermitted();
+    public List<Direction> directions() {
+        return limiter.permitted();
     }
 }

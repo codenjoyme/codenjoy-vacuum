@@ -32,17 +32,12 @@ public abstract class AbstractItem extends PointImpl implements State<Elements, 
 
     private Elements element;
 
-    public AbstractItem(Point point, Elements element) {
-        super(point);
+    public AbstractItem(Point pt, Elements element) {
+        super(pt);
         this.element = element;
     }
 
-    public AbstractItem(AbstractItem item) {
-        super(item.x, item.y);
-        this.element = item.element;
-    }
-
-    public void setElement(Elements element) {
+    public void element(Elements element) {
         this.element = element;
     }
 

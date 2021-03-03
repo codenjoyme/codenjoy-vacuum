@@ -30,21 +30,16 @@ public class DirectionSwitcher extends PointImpl {
 
     private Direction direction;
 
-    public DirectionSwitcher(Point point, Direction direction) {
-        super(point);
-        if (direction == null) {
-            throw new IllegalArgumentException("Direction can not be null");
-        }
-        this.x = x;
-        this.y = y;
+    public DirectionSwitcher(Point pt, Direction direction) {
+        super(pt);
         this.direction = direction;
     }
 
-    public void setDirection(Direction direction) {
+    public void direction(Direction direction) {
         this.direction = direction;
     }
 
-    public Direction getDirection() {
+    public Direction direction() {
         return direction;
     }
 }

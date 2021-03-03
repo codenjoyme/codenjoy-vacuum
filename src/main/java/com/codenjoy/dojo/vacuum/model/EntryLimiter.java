@@ -34,19 +34,19 @@ import java.util.Set;
 
 public class EntryLimiter extends PointImpl {
 
-    private Set<Direction> permitted;
+    private List<Direction> permitted;
 
     public EntryLimiter(Point pt, List<Direction> directions) {
         super(pt);
-        this.permitted = Sets.newHashSet(directions);
+        this.permitted = directions;
     }
 
-    public List<Direction> getPermitted() {
-        return new ArrayList<>(permitted);
+    public List<Direction> permitted() {
+        return permitted;
     }
 
-    public void setPermitted(List<Direction> entries) {
-        this.permitted = new HashSet<>(entries);
+    public void permitted(List<Direction> permitted) {
+        this.permitted = permitted;
     }
 
     public boolean canEnterFrom(Point from) {

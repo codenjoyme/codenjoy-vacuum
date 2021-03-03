@@ -87,7 +87,7 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<DirectionSwitcherItem> getDirectionSwitcher(Point pt) {
+    public Optional<DirectionSwitcherItem> switcher(Point pt) {
         return found(switchers, pt);
     }
 
@@ -123,7 +123,7 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<EntryLimiterItem> getDirectionLimiter(Point pt) {
+    public Optional<EntryLimiterItem> limiter(Point pt) {
         return found(limiters, pt);
     }
 
@@ -137,7 +137,7 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<RoundaboutItem> getRoundabout(Point pt) {
+    public Optional<RoundaboutItem> roundabout(Point pt) {
         return found(roundabouts, pt);
     }
 

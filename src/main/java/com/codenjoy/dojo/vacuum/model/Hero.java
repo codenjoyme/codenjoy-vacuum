@@ -105,11 +105,11 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     }
 
     private void goTo(Point destination) {
-        Boolean isNotEntryLimited = field.getDirectionLimiter(destination)
+        Boolean isNotEntryLimited = field.limiter(destination)
                 .map(l -> l.canEnterFrom(this))
                 .orElse(true);
 
-        Optional<RoundaboutItem> roundabout = field.getRoundabout(destination);
+        Optional<RoundaboutItem> roundabout = field.roundabout(destination);
 
         isNotEntryLimited &= roundabout.map(r -> r.canEnterFrom(this))
                 .orElse(true);
@@ -122,8 +122,8 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
         roundabout.ifPresent(r -> this.direction = r.enterFrom(this));
         move(destination);
 
-        field.getDirectionSwitcher(destination)
-                .ifPresent(s -> this.direction = s.getDirection());
+        field.switcher(destination)
+                .ifPresent(s -> this.direction = s.direction());
 
         if (field.isCleanPoint(destination)) {
             events.add(Event.TIME_WASTED);

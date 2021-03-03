@@ -33,7 +33,7 @@ public class RoundaboutItem extends AbstractItem {
 
     private final Roundabout roundabout;
 
-    private static Elements elementByDirections(List<Direction> directions) {
+    private static Elements element(List<Direction> directions) {
         if (directions.size() != 2) {
             throw new IllegalArgumentException("Roundabout should treat exactly 2 directions but " + directions.size() + " received");
         }
@@ -58,16 +58,16 @@ public class RoundaboutItem extends AbstractItem {
         super(pt, element);
         switch (element) {
             case ROUNDABOUT_LEFT_UP:
-                this.roundabout = new Roundabout(pt, Direction.LEFT, Direction.UP);
+                roundabout = new Roundabout(pt, Direction.LEFT, Direction.UP);
                 break;
             case ROUNDABOUT_UP_RIGHT:
-                this.roundabout = new Roundabout(pt, Direction.UP, Direction.RIGHT);
+                roundabout = new Roundabout(pt, Direction.UP, Direction.RIGHT);
                 break;
             case ROUNDABOUT_RIGHT_DOWN:
-                this.roundabout = new Roundabout(pt, Direction.RIGHT, Direction.DOWN);
+                roundabout = new Roundabout(pt, Direction.RIGHT, Direction.DOWN);
                 break;
             case ROUNDABOUT_DOWN_LEFT:
-                this.roundabout = new Roundabout(pt, Direction.DOWN, Direction.LEFT);
+                roundabout = new Roundabout(pt, Direction.DOWN, Direction.LEFT);
                 break;
             default:
                 throw new IllegalArgumentException("Element " + element + " is not supported");
@@ -79,8 +79,8 @@ public class RoundaboutItem extends AbstractItem {
     }
 
     public Direction enterFrom(Point pt) {
-        Direction exitDirection = roundabout.enterFrom(pt);
-        this.setElement(elementByDirections(roundabout.getDirections()));
-        return exitDirection;
+        Direction exit = roundabout.enterFrom(pt);
+        this.element(element(roundabout.directions()));
+        return exit;
     }
 }
