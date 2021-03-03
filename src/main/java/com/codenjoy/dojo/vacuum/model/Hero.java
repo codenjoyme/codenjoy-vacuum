@@ -58,26 +58,30 @@ public class Hero extends PlayerHero<Field> implements State<Element, Player> {
 
     @Override
     public void down() {
-        if (direction == null)
+        if (direction == null) {
             direction = Direction.DOWN;
+        }
     }
 
     @Override
     public void up() {
-        if (direction == null)
+        if (direction == null) {
             direction = Direction.UP;
+        }
     }
 
     @Override
     public void left() {
-        if (direction == null)
+        if (direction == null) {
             direction = Direction.LEFT;
+        }
     }
 
     @Override
     public void right() {
-        if (direction == null)
+        if (direction == null) {
             direction = Direction.RIGHT;
+        }
     }
 
     @Override
