@@ -37,8 +37,29 @@ public class Roundabout extends AbstractItem {
 
     private List<Direction> permitted;
 
-    public boolean canEnterFrom(Point from) {
-        return EntryLimiter.checkEnter(permitted, from, this);
+    public Roundabout(Point pt, Elements element) {
+        super(pt, element);
+
+        switch (element) {
+            case ROUNDABOUT_LEFT_UP:
+                permitted = Arrays.asList(Direction.LEFT, Direction.UP);
+                break;
+            case ROUNDABOUT_UP_RIGHT:
+                permitted = Arrays.asList(Direction.UP, Direction.RIGHT);
+                break;
+            case ROUNDABOUT_RIGHT_DOWN:
+                permitted = Arrays.asList(Direction.RIGHT, Direction.DOWN);
+                break;
+            case ROUNDABOUT_DOWN_LEFT:
+                permitted = Arrays.asList(Direction.DOWN, Direction.LEFT);
+                break;
+            default:
+                throw new IllegalArgumentException("Element " + element + " is not supported");
+        }
+    }
+
+    public boolean canEnterFrom(Point pt) {
+        return EntryLimiter.checkEnter(permitted, pt, this);
     }
 
     public Direction enterFrom(Point pt) {
@@ -96,26 +117,5 @@ public class Roundabout extends AbstractItem {
         }
 
         throw new IllegalArgumentException("Roundabout with direction [" + directions.get(0) + ", " + directions.get(1) + "] is not supported");
-    }
-
-    public Roundabout(Point pt, Elements element) {
-        super(pt, element);
-
-        switch (element) {
-            case ROUNDABOUT_LEFT_UP:
-                permitted = Arrays.asList(Direction.LEFT, Direction.UP);
-                break;
-            case ROUNDABOUT_UP_RIGHT:
-                permitted = Arrays.asList(Direction.UP, Direction.RIGHT);
-                break;
-            case ROUNDABOUT_RIGHT_DOWN:
-                permitted = Arrays.asList(Direction.RIGHT, Direction.DOWN);
-                break;
-            case ROUNDABOUT_DOWN_LEFT:
-                permitted = Arrays.asList(Direction.DOWN, Direction.LEFT);
-                break;
-            default:
-                throw new IllegalArgumentException("Element " + element + " is not supported");
-        }
     }
 }

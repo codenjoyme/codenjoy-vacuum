@@ -27,6 +27,7 @@ import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.Elements;
 import com.google.common.collect.Lists;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +39,12 @@ public class EntryLimiter extends AbstractItem {
 
     private static final Map<Elements, List<Direction>> elements =
             new HashMap<>(){{
-                put(LIMITER_LEFT, Lists.newArrayList(LEFT));
-                put(LIMITER_UP, Lists.newArrayList(UP));
-                put(LIMITER_RIGHT, Lists.newArrayList(RIGHT));
-                put(LIMITER_DOWN, Lists.newArrayList(DOWN));
-                put(LIMITER_HORIZONTAL, Lists.newArrayList(LEFT, RIGHT));
-                put(LIMITER_VERTICAL, Lists.newArrayList(UP, DOWN));
+                put(LIMITER_LEFT, Arrays.asList(LEFT));
+                put(LIMITER_UP, Arrays.asList(UP));
+                put(LIMITER_RIGHT, Arrays.asList(RIGHT));
+                put(LIMITER_DOWN, Arrays.asList(DOWN));
+                put(LIMITER_HORIZONTAL, Arrays.asList(LEFT, RIGHT));
+                put(LIMITER_VERTICAL, Arrays.asList(UP, DOWN));
             }};
 
     private List<Direction> permitted;
