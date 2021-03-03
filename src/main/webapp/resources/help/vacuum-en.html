@@ -39,63 +39,103 @@
         <div id="primary">
             <div id="content" role="main">
                 <header class="entry-header">
-                    <h1 class="entry-title">Sample codenjoy — how to play? <a target="_self" href="resources/help/vacuum.html">[RU]</a></h1>
+                    <h1 class="entry-title">Vacuum cleaner codenjoy — how to play? <a target="_self" href="resources/help/vacuum.html">[RU]</a></h1>
                 </header>
                 <div class="entry-content">
                     <div class="page-restrict-output">
-                        <p>The game demo server is also available on the Internet 24/7
+                        <p>
+                            The game demo server is also available on the Internet 24/7
                             for review purposes <a href="http://codenjoy.com/codenjoy-contest">
-                                http://codenjoy.com/codenjoy-contest</a></p>
+                                http://codenjoy.com/codenjoy-contest</a>
+                        </p>
 
-                        <p>The game is open source. To implement your game, fix it
+                        <p>
+                            The game is open source. To implement your game, fix it
                             errors in the current one and making other edits are necessary to get started
                             <a href="https://github.com/codenjoyme/codenjoy" > fork the project</a>.
-                            In the root of the repository there is a description in the file Readme.md - it describes what to do next.</p>
+                            In the root of the repository there is a description in the
+                            file Readme.md - it describes what to do next.
+                        </p>
 
-                        <p>If you have any questions, write to <a href="skype:alexander.baglay">skype: alexander. baglay</a>
-                            or by email <a href="mailto:apofig@gmail.com">apofig@gmail.com</a></p>
+                        <p>If you have any questions, write to
+                            <a href="skype:alexander.baglay">skype: alexander. baglay</a>
+                            or by email <a href="mailto:apofig@gmail.com">apofig@gmail.com</a>
+                        </p>
 
                         <h2>What is the essence of the game?</h2>
 
-                        <p>You need to write a program for a robot vacuum cleaner, the task of which is
-                            The goal is to clean the entire location from dust.</p>
-                        <p>The robot vacuum cleaner does not know how to turn on the move and moves in the selected direction until it stops.
-                            After the robot vacuum cleaner has stopped, it can decide to move in some direction.
-                            a friend
-                            available direction</p>
                         <p>
-                            One player on the field. You can only win when the location is completely cleared.
-                            You can only lose
-                            driving yourself into a dead end. In this case, you need to ask to restart the level. (see below)
+                            You need to write a program for a robot vacuum cleaner,
+                            the task of which is The goal is to clean the entire
+                            location from dust.
                         </p>
                         <p>
-                            Players compete each in their own location for the title of the fastest and smartest
-                            a cleaning robot, after all
-                            points are awarded for collecting dust and are removed for driving through already cleared cells.
+                            The robot vacuum cleaner does not know how to turn on
+                            the move and moves in the selected direction until it stops.
+                            After the robot vacuum cleaner has stopped, it can
+                            decide to move in some available direction
+                        </p>
+                        <p>
+                            One player on the field. You can only win when the location is
+                            completely cleared. You can only lose driving yourself into
+                            a dead end. In this case, you need to ask to restart (see below)
+                            the level.
+
+                        </p>
+                        <p>
+                            Players compete each in their own location for the title of
+                            the fastest and smartest a cleaning robot, after all
+                            points are awarded for collecting dust and are removed
+                            for driving through already cleared cells.
                         </p>
 
-                        <p>So, the player <a href="register?gameName=sample">
-                            registers on the server</a>, specifying your email address. Next, you need to connect <a href="resources/user/sample-servers.zip">from the code</a>
-                            to the server via a websocket. This is a Maven project and it is suitable for playing in JVM languages.
-                            How to run it see in the root of the project in the file README.txt</p>
-                        <p>For other languages, you will have to write your client (and then search with us by email:
-                            apofig@gmail.com)</p>
-                        <p>Address to connect to the game on the server http://codenjoy.com:</p>
+                        <p>
+                            So, the player <a href="register?gameName=sample">
+                            registers on the server</a>, specifying your email address.
+                            Next, you need to connect
+                            <a href="resources/user/sample-servers.zip">from the code</a>
+                            to the server via a websocket. This is a Maven project and
+                            it is suitable for playing in JVM languages. How to run it
+                            see in the root of the project in the file README.txt
+                        </p>
+                        <p>
+                            For other languages, you will have to write your client
+                            (and then search with us by email:
+                            apofig@gmail.com)
+                        </p>
+                        <p>
+                            Address to connect to the game on the server http://codenjoy.com:
+                        </p>
                         <pre>ws://codenjoy.com:80/codenjoy-contest/ws?user=[user]&code=[code]</pre>
-                        <p>Address for connecting to the game on a server deployed on a local network:</p>
+                        <p>
+                            Address for connecting to the game on a server deployed on a local network:
+                        </p>
                         <pre>ws://[server]:8080/codenjoy-contest/ws?user=[user]&code=[code]</pre>
-                        <p>Here [server] - the ip address of the server, [user] - the id of the player, and [code] - your security token, his you
+                        <p>
+                            Here [server] - the ip address of the server, [user] - the id
+                            of the player, and [code] - your security token, his you
                             you can get it from the address book
-                            browser lines after registration / login</p>
-                        <p>After connecting, the client will regularly (every second) receive a string
-                            characters — with the encoded state of the field. The format is as follows:</p>
+                            browser lines after registration / login
+                        </p>
+                        <p>
+                            After connecting, the client will regularly (every second)
+                            receive a string characters — with the encoded state of
+                            the field. The format is as follows:
+                        </p>
 
                         <pre>^board=(.*)$</pre>
-                        <p>You can use this regular expression to extract a board from the resulting string. Here is an example of a string from the server:</p>
+                        <p>
+                            You can use this regular expression to extract a board from
+                            the resulting string. Here is an example of a string
+                            from the server:
+                        </p>
                         <pre>Board=###########*O#┌**#*##*##*#*#*##****#*#*#######***##*O******##╥#*###**##*#*###**##**←###**###########</pre>
-                        <p>The length of the string is equal to the area of the field. If you insert a hyphen character
-                            strings every sqrt(length(string)) characters, then you will get a readable
-                            field image:</p>
+                        <p>
+                            The length of the string is equal to the area of the field.
+                            If you insert a hyphen character strings every
+                            sqrt(length(string)) characters, then you will get a readable
+                            field image:
+                        </p>
                         <pre>
 ##########
 #*O#┌**#*#
@@ -109,14 +149,18 @@
 ##########</pre>
 
                         <p>
-                            The first character of the line corresponds to the cell located in the upper left
-                            corner and has the coordinate [9, 0]. The first character of the last line is at the origin [0, 0].
-                            In this example, the position of the robot vacuum cleaner (symbol O) is [8, 1].
+                            The first character of the line corresponds to the cell located
+                            in the upper left corner and has the coordinate [9, 0].
+                            The first character of the last line is at the origin [0, 0].
+                            In this example, the position of the robot vacuum cleaner
+                            (symbol O) is [8, 1].
                         </p>
 
                         </br>
 
-                        <p><b><u>The interpretation of symbols</u></b></p>
+                        <p>
+                            <b><u>The interpretation of symbols</u></b>
+                        </p>
 
                         <p>
                             Empty space – on which the robot vacuum cleaner can drive
@@ -125,23 +169,29 @@
                         <pre>
 NONE(' ')</pre>
 
-                        <p>Barrier that you can't pass through</p>
+                        <p>
+                            Barrier that you can't pass through
+                        </p>
                         <pre>
 BARRIER('#')</pre>
 
-                        <p>Our robot vacuum cleaner</p>
+                        <p>
+                            Our robot vacuum cleaner
+                        </p>
                         <pre>
 VACUUM('O')</pre>
 
-                        <p>Dust that needs to be removed</p>
+                        <p>
+                            Dust that needs to be removed
+                        </p>
                         <pre>
 DUST('*')</pre>
 
                         <p>
                             The direction indicators. They can be entered from any direction,
-                            but the robot will automatically change the direction of movement according to the pointer. Directions to the index
-                            it is not subject to a fine.
-                            The pointer can't be dusty.
+                            but the robot will automatically change the direction of
+                            movement according to the pointer. Directions to the index
+                            it is not subject to a fine. The pointer can't be dusty.
                         </p>
                         <pre>
 SWITCH_LEFT('←')
@@ -150,9 +200,10 @@ SWITCH_UP('↑')
 SWITCH_DOWN('↓')</pre>
 
                         <p>
-                            Traffic limiters that can only be entered from a certain direction (on the left,
-                            right, top, bottom, left and right, bottom and top, respectively.)
-                            Driving on the limiters is not subject to a fine. The limiter cannot be dusted.
+                            Traffic limiters that can only be entered from a certain
+                            direction (on the left, right, top, bottom, left and right,
+                            bottom and top, respectively.) Driving on the limiters is
+                            not subject to a fine. The limiter cannot be dusted.
                         </p>
                         <pre>
 LIMITER_LEFT('╡')
@@ -162,28 +213,39 @@ LIMITER_DOWN('╥')
 LIMITER_VERTICAL('║')
 LIMITER_HORIZONTAL('═')</pre>
                         <p>
-                            "Carousels" - platforms that work both as limiters and as signposts when passing through
-                            through the carousel, she turns in a clockwise direction.
-                            You can call only from a certain direction (left-top, top-right, right-bottom,
-                            bottom-left, respectively).
-                            The robot vacuum cleaner will automatically turn where the carousel directs it.
+                            "Carousels" - platforms that work both as limiters and as signposts
+                            when passing through through the carousel, she turns in a clockwise
+                            direction. You can call only from a certain direction (left-top,
+                            top-right, right-bottom, bottom-left, respectively).
+                            The robot vacuum cleaner will automatically turn where the
+                            carousel directs it.
                         </p>
                         <pre>
 ROUNDABOUT_LEFT_UP('┘')
 ROUNDABOUT_UP_RIGHT('└')
 ROUNDABOUT_RIGHT_DOWN('┌')
 ROUNDABOUT_DOWN_LEFT('┐')</pre>
-                        <p>The game is turn-based, every second the server sends your client (bot)
-                            the state of the updated field at the current moment and waits for a command to the robot vacuum cleaner in response.
-                            In the next second, the player must have time to give the command to the robot.
-                            If you do not have time-the robot is standing still.</p>
-                        <p>There are several commands: UP, DOWN, LEFT, RIGHT-lead to the movement of the robot
-                            in the specified direction until it stops (remember that the direction during the movement can only be changed by signs or a " carousel"),
+                        <p>
+                            The game is turn-based, every second the server sends your
+                            client (bot) the state of the updated field at the current
+                            moment and waits for a  command to the robot vacuum cleaner
+                            in response. In the next second, the player must have
+                            time to give the command to the robot.
+                            If you do not have time-the robot is standing still.
+                        </p>
+                        <p>
+                            There are several commands: UP, DOWN, LEFT, RIGHT-lead to
+                            the movement of the robot in the specified direction until
+                            it stops (remember that the direction during the movement
+                            can only be changed by signs or a " carousel"),
                             ACT-asks the server to restart the level.
                         </p>
-                        <p>The first task is to write a websocket client that will connect to the server.
-                            Then make the hero obey the command. Thus, the player will be prepared
-                            back to the main game. The main task is to play a meaningful game and win.</p>
+                        <p>
+                            The first task is to write a websocket client that will
+                            connect to the server. Then make the hero obey the command.
+                            Thus, the player will be prepared back to the main game.
+                            The main task is to play a meaningful game and win.
+                        </p>
                     </div>
                 </div>
             </div>
