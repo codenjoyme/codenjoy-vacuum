@@ -39,7 +39,6 @@ public class YourSolver implements Solver<Board> {
 
     private Dice dice;
     private Board board;
-    private int i = -2;
 
     public YourSolver(Dice dice) {
         this.dice = dice;
@@ -48,27 +47,17 @@ public class YourSolver implements Solver<Board> {
     @Override
     public String get(Board board) {
         this.board = board;
-        i++;
-        if (i % 40 < 10) {
-            return Direction.RIGHT.toString();
-        }
-        if (i % 40 < 20) {
-            return Direction.DOWN.toString();
-        }
-        if (i % 40 < 30) {
-            return Direction.LEFT.toString();
-        }
-        if (i % 40 < 40) {
-            return Direction.UP.toString();
-        }
-        return "";
+
+        // TODO your code here
+
+        return Direction.RIGHT.toString();
     }
 
     public static void main(String[] args) {
         WebSocketRunner.runClient(args,
 //                 paste here board page url from browser after registration
 //                 or put it as command line parameter
-                "http://localhost:8080/codenjoy-contest/board/player/i3g1xyr7stlevmaa3a20?code=5207184619846573265",
+                "http://codenjoy.com:80/codenjoy-contest/board/player/3edq63tw0bq4w4iem7nb?code=1234567890123456789",
                 new YourSolver(new RandomDice()),
                 new Board());
     }
