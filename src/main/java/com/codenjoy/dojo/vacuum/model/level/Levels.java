@@ -29,6 +29,9 @@ public class Levels {
 
     private static final List<Level> levels = new ArrayList<>();
 
+    // TODO сделать левелы изменяемыми на админке и убрать этот хардкод
+    public static int SIZE = level1().newBoard().getSize();
+
     static {
         levels.add(level1());
         levels.add(level2());

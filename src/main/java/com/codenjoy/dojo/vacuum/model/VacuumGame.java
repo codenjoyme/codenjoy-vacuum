@@ -25,10 +25,12 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.printer.BoardReader;
+import com.codenjoy.dojo.services.settings.SettingsReader;
 import com.codenjoy.dojo.vacuum.model.items.EntryLimiterItem;
 import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcherItem;
 import com.codenjoy.dojo.vacuum.model.items.RoundaboutItem;
 import com.codenjoy.dojo.vacuum.model.level.Level;
+import com.codenjoy.dojo.vacuum.services.GameSettings;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -46,10 +48,12 @@ public class VacuumGame implements Field {
     private final List<Player> players = new LinkedList<>();
     private Level level;
     private GameBoard board;
+    private GameSettings settings;
 
-    public VacuumGame(Level level) {
+    public VacuumGame(Level level, GameSettings settings) {
         this.level = level;
         this.board = level.newBoard();
+        this.settings = settings;
     }
 
     @Override
@@ -156,5 +160,10 @@ public class VacuumGame implements Field {
                 }};
             }
         };
+    }
+
+    @Override
+    public GameSettings settings() {
+        return settings;
     }
 }

@@ -27,7 +27,6 @@ import com.codenjoy.dojo.client.ClientBoard;
 import com.codenjoy.dojo.client.Solver;
 import com.codenjoy.dojo.services.AbstractGameType;
 import com.codenjoy.dojo.services.EventListener;
-import com.codenjoy.dojo.services.GameType;
 import com.codenjoy.dojo.services.PlayerScores;
 import com.codenjoy.dojo.services.multiplayer.GameField;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
@@ -42,31 +41,26 @@ import com.codenjoy.dojo.vacuum.model.Player;
 import com.codenjoy.dojo.vacuum.model.VacuumGame;
 import com.codenjoy.dojo.vacuum.model.level.Levels;
 
-public class GameRunner extends AbstractGameType implements GameType {
+public class GameRunner extends AbstractGameType<GameSettings> {
 
-    private VacuumGame game;
-
-    public GameRunner() {
-        setupSettings();
-    }
-
-    private void setupSettings() {
-        SettingsWrapper.setup(settings);
+    @Override
+    public GameSettings getSettings() {
+        return new GameSettings();
     }
 
     @Override
-    public PlayerScores getPlayerScores(Object score) {
-        return new Scores((Integer) score, SettingsWrapper.data);
+    public PlayerScores getPlayerScores(Object score, GameSettings settings) {
+        return new Scores((Integer) score, settings);
     }
 
     @Override
-    public GameField createGame(int levelNumber) {
-        return game = new VacuumGame(Levels.get(levelNumber));
+    public GameField createGame(int levelNumber, GameSettings settings) {
+        return new VacuumGame(Levels.get(levelNumber), settings);
     }
 
     @Override
-    public Parameter<Integer> getBoardSize() {
-        return SimpleParameter.v(game.getSize());
+    public Parameter<Integer> getBoardSize(GameSettings settings) {
+        return SimpleParameter.v(Levels.SIZE);
     }
 
     @Override
@@ -90,12 +84,12 @@ public class GameRunner extends AbstractGameType implements GameType {
     }
 
     @Override
-    public MultiplayerType getMultiplayerType() {
+    public MultiplayerType getMultiplayerType(GameSettings settings) {
         return MultiplayerType.SINGLE_LEVELS.apply(Levels.count());
     }
 
     @Override
-    public GamePlayer createPlayer(EventListener listener, String playerId) {
-        return new Player(listener);
+    public GamePlayer createPlayer(EventListener listener, String playerId, GameSettings settings) {
+        return new Player(listener, settings);
     }
 }

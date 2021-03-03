@@ -27,23 +27,24 @@ import com.codenjoy.dojo.services.PlayerScores;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.codenjoy.dojo.vacuum.services.GameSettings.Keys.CLEANING_ONE_CELL_REWARD;
+import static com.codenjoy.dojo.vacuum.services.GameSettings.Keys.WASTE_OF_TIME_PENALTY;
+
 /**
  * Класс, который умеет подсчитывать очки за те или иные действия.
  * Обычно хочется, чтобы константы очков не были захардкоджены, потому используй объект {@see Settings} для их хранения.
  */
 public class Scores implements PlayerScores {
-    private static final int MIN_SCORE = 0;
+
+    // TODO выделить так же во всех играх
+    public static final int MIN_SCORE = 0;
 
     private final AtomicInteger score;
-    private final SettingsWrapper settings;
+    private final GameSettings settings;
 
-    public Scores(int startScore, SettingsWrapper settings) {
+    public Scores(int startScore, GameSettings settings) {
         this.score = new AtomicInteger(startScore);
         this.settings = settings;
-    }
-
-    public Scores(SettingsWrapper settings) {
-        this(settings.getInitialScore(), settings);
     }
 
     @Override
@@ -66,10 +67,10 @@ public class Scores implements PlayerScores {
             case ALL_CLEAR:
                 break;
             case TIME_WASTED:
-                score.addAndGet(settings.getWasteTimePenalty() * -1);
+                score.addAndGet(settings.integer(WASTE_OF_TIME_PENALTY) * -1);
                 break;
             case DUST_CLEANED:
-                score.addAndGet(settings.getCleanReward());
+                score.addAndGet(settings.integer(CLEANING_ONE_CELL_REWARD));
                 break;
         }
         score.accumulateAndGet(MIN_SCORE, Math::max);

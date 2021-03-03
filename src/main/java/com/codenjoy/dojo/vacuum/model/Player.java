@@ -26,6 +26,7 @@ package com.codenjoy.dojo.vacuum.model;
 import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
 import com.codenjoy.dojo.vacuum.services.Event;
+import com.codenjoy.dojo.vacuum.services.GameSettings;
 
 /**
  * Класс игрока. Тут кроме героя может подсчитываться очки.
@@ -37,8 +38,8 @@ public class Player extends GamePlayer<Hero, Field> {
     private boolean levelPassed = false;
     private boolean restartRequested = false;
 
-    public Player(EventListener listener) {
-        super(listener);
+    public Player(EventListener listener, GameSettings settings) {
+        super(listener, settings);
     }
 
     public Hero getHero() {
