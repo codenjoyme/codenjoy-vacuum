@@ -235,21 +235,20 @@ public class VacuumTest extends AbstractGameTest {
         verify(listener, never()).event(TIME_WASTED);
     }
 
-    // TODO: Discuss, should it be correct behaviour or not (At the time not)
-//    @Test
-//    public void wastingTime_whenDoNothing() {
-//        givenFl("#####" +
-//                "#S**#" +
-//                "#* *#" +
-//                "#***#" +
-//                "#####");
-//
-//        game.tick();
-//        game.tick();
-//        game.tick();
-//
-//        verify(listener, times(3)).event(TIME_WASTED);
-//    }
+    @Test
+    public void shouldNotBeFined_whenDoNothingAtGameTick() {
+        givenFl("#####" +
+                "#S**#" +
+                "#* *#" +
+                "#***#" +
+                "#####");
+
+        game.tick();
+        game.tick();
+        game.tick();
+
+        verify(listener, never()).event(TIME_WASTED);
+    }
 
     private boolean containsOnly(List<?> list, Object value) {
         for (Object o : list) {
