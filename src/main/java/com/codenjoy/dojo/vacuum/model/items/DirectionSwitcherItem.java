@@ -23,41 +23,30 @@ package com.codenjoy.dojo.vacuum.model.items;
  */
 
 import com.codenjoy.dojo.services.Direction;
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.DirectionSwitcher;
 import com.codenjoy.dojo.vacuum.model.Elements;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.codenjoy.dojo.services.Direction.*;
+import static com.codenjoy.dojo.vacuum.model.Elements.*;
+
 public class DirectionSwitcherItem extends AbstractItem {
+    private static final Map<Elements, Direction> elementsToDirections = new HashMap<>();
+    static {
+        elementsToDirections.put(SWITCH_LEFT, LEFT);
+        elementsToDirections.put(SWITCH_UP, UP);
+        elementsToDirections.put(SWITCH_RIGHT, RIGHT);
+        elementsToDirections.put(SWITCH_DOWN, DOWN);
+    }
+
     private final DirectionSwitcher switcher;
 
-    public static DirectionSwitcherItem create(Direction direction, int x, int y) {
-        Elements element;
-        switch (direction) {
-            case LEFT:
-                element = Elements.SWITCH_LEFT;
-                break;
-            case RIGHT:
-                element = Elements.SWITCH_RIGHT;
-                break;
-            case UP:
-                element = Elements.SWITCH_UP;
-                break;
-            case DOWN:
-                element = Elements.SWITCH_DOWN;
-                break;
-            default:
-                throw new IllegalArgumentException("Direction " + direction + " is not supported by direction switchers");
-        }
-        return new DirectionSwitcherItem(element, direction, x, y);
-    }
-
-    private DirectionSwitcherItem(Elements element, Direction direction, int x, int y) {
-        super(element, x, y);
-        this.switcher = new DirectionSwitcher(x, y, direction);
-    }
-
-    public DirectionSwitcherItem(DirectionSwitcherItem another) {
-        super(another);
-        this.switcher = new DirectionSwitcher(another.switcher);
+    public DirectionSwitcherItem(Point point, Elements element) {
+        super(point, element);
+        this.switcher = new DirectionSwitcher(point.getX(), point.getY(), elementsToDirections.get(element));
     }
 
     public Direction getDirection() {

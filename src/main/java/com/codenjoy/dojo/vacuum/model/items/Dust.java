@@ -22,12 +22,17 @@ package com.codenjoy.dojo.vacuum.model.items;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.Elements;
 
 public class Dust extends AbstractItem {
 
     public Dust(int x, int y) {
         super(Elements.DUST, x, y);
+    }
+
+    public Dust(Point point) {
+        super(point, Elements.DUST);
     }
 
     public Dust(AbstractItem item) {

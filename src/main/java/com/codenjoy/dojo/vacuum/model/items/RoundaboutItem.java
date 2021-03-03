@@ -26,19 +26,11 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.vacuum.model.Roundabout;
-import com.google.common.collect.Sets;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoundaboutItem extends AbstractItem {
     private final Roundabout roundabout;
-
-    public static RoundaboutItem create(int x, int y, Direction... directions) {
-        ArrayList<Direction> directionsList = new ArrayList<>(Sets.newHashSet(directions));
-        Elements roundaboutType = elementByDirections(directionsList);
-        return new RoundaboutItem(roundaboutType, x, y);
-    }
 
     private static Elements elementByDirections(List<Direction> directions) {
         if (directions.size() != 2) {
@@ -79,6 +71,10 @@ public class RoundaboutItem extends AbstractItem {
             default:
                 throw new IllegalArgumentException("Element " + element + " is not supported");
         }
+    }
+
+    public RoundaboutItem(Point point, Elements element) {
+        this(element, point.getX(), point.getY());
     }
 
     public boolean canEnterFrom(Point point) {

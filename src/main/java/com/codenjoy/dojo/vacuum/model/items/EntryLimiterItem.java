@@ -28,50 +28,33 @@ import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.vacuum.model.EntryLimiter;
 import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import static com.codenjoy.dojo.services.Direction.*;
 import static com.codenjoy.dojo.vacuum.model.Elements.*;
 
 public class EntryLimiterItem extends AbstractItem {
+    private static final Map<Elements, List<Direction>> elementsToDirections = new HashMap<>();
+    static {
+        elementsToDirections.put(LIMITER_LEFT, Lists.newArrayList(LEFT));
+        elementsToDirections.put(LIMITER_UP, Lists.newArrayList(UP));
+        elementsToDirections.put(LIMITER_RIGHT, Lists.newArrayList(RIGHT));
+        elementsToDirections.put(LIMITER_DOWN, Lists.newArrayList(DOWN));
+        elementsToDirections.put(LIMITER_HORIZONTAL, Lists.newArrayList(LEFT, RIGHT));
+        elementsToDirections.put(LIMITER_VERTICAL, Lists.newArrayList(UP, DOWN));
+    }
+
     private final EntryLimiter limiter;
 
-    public static EntryLimiterItem create(int x, int y, Direction... directions) {
-        if (directions.length == 1) {
-            Direction direction = directions[0];
-            switch (direction) {
-                case UP:
-                    return new EntryLimiterItem(x, y, LIMITER_UP, Direction.UP);
-                case LEFT:
-                    return new EntryLimiterItem(x, y, LIMITER_LEFT, Direction.LEFT);
-                case RIGHT:
-                    return new EntryLimiterItem(x, y, LIMITER_RIGHT, Direction.RIGHT);
-                case DOWN:
-                    return new EntryLimiterItem(x, y, LIMITER_DOWN, Direction.DOWN);
-                default:
-                    throw new IllegalArgumentException("Direction " + direction + " is not supported by direction limiters");
-            }
-        }
-        if (directions.length == 2) {
-            ArrayList<Direction> directionList = Lists.newArrayList(directions);
-            if (directionList.contains(Direction.UP) && directionList.contains(Direction.DOWN)) {
-                return new EntryLimiterItem(x, y, LIMITER_VERTICAL, directions);
-            }
-            if (directionList.contains(Direction.LEFT) && directionList.contains(Direction.RIGHT)) {
-                return new EntryLimiterItem(x, y, LIMITER_HORIZONTAL, directions);
-            }
-            throw new IllegalArgumentException("Directions [" + directions[0] + ", " + directions[1] + "] are not supported by direction limiters");
-        }
-        throw new IllegalArgumentException("A direction limiter can not have more than 2 permitted directions");
-    }
-
-    private EntryLimiterItem(int x, int y, Elements element, Direction... directions) {
+    private EntryLimiterItem(Elements element, int x, int y) {
         super(element, x, y);
-        this.limiter = new EntryLimiter(x, y, directions);
+        this.limiter = new EntryLimiter(x, y, elementsToDirections.get(element));
     }
 
-    public EntryLimiterItem(EntryLimiterItem another) {
-        super(another);
-        this.limiter = new EntryLimiter(another.limiter);
+    public EntryLimiterItem(Point point, Elements element) {
+        this(element, point.getX(), point.getY());
     }
 
     public boolean canEnterFrom(Point point) {

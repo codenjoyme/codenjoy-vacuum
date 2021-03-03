@@ -23,12 +23,17 @@ package com.codenjoy.dojo.vacuum.model.items;
  */
 
 
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.Elements;
 
 public class Barrier extends AbstractItem {
 
     public Barrier(int x, int y) {
         super(Elements.BARRIER, x, y);
+    }
+
+    public Barrier(Point point) {
+        super(point, Elements.BARRIER);
     }
 
     public Barrier(Barrier barrier) {

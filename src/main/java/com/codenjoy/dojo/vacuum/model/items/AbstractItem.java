@@ -22,6 +22,7 @@ package com.codenjoy.dojo.vacuum.model.items;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
 import com.codenjoy.dojo.vacuum.model.Elements;
@@ -32,6 +33,11 @@ public abstract class AbstractItem extends PointImpl implements State<Elements, 
 
     public AbstractItem(Elements element, int x, int y) {
         super(x, y);
+        this.element = element;
+    }
+
+    public AbstractItem(Point point, Elements element) {
+        super(point);
         this.element = element;
     }
 

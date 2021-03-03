@@ -22,15 +22,19 @@ package com.codenjoy.dojo.vacuum.model.level;
  * #L%
  */
 
-import com.codenjoy.dojo.services.Direction;
-import com.codenjoy.dojo.vacuum.model.Elements;
+import com.codenjoy.dojo.services.LengthToXY;
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.GameBoard;
 import com.codenjoy.dojo.vacuum.model.items.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.codenjoy.dojo.utils.LevelUtils.getObjects;
+import static com.codenjoy.dojo.vacuum.model.Elements.*;
 
 public class Level {
 
@@ -81,109 +85,22 @@ public class Level {
         if (sqrt - Math.floor(sqrt) != 0) {
             throw new IllegalArgumentException("Map should be square");
         }
-
         int size = (int) sqrt;
+        LengthToXY mapper = new LengthToXY(size);
 
-        Start start = null;
-        var barriers = new ArrayList<Barrier>();
-        var dust = new ArrayList<Dust>();
-        var switchers = new ArrayList<DirectionSwitcherItem>();
-        var limiters = new ArrayList<EntryLimiterItem>();
-        var roundabouts = new ArrayList<RoundaboutItem>();
+        Start start = getObjects(mapper, map, Start::new, START).get(0);
+        var barriers = getObjects(mapper, map, (Function<Point, Barrier>) Barrier::new, BARRIER);
+        var dust = getObjects(mapper, map, (Function<Point, Dust>) Dust::new, DUST);
 
-        for (int i = 0; i < map.length(); i++) {
-            char ch = map.charAt(i);
-            int x = i % size;
-            int y = size - 1 - i / size;
-            switch (Elements.byCode(ch)) {
-                case START:
-                    if (start != null) {
-                        throw new IllegalArgumentException("Only one start point should be declared");
-                    }
-                    start = new Start(x, y);
-                    break;
-                case BARRIER:
-                    barriers.add(new Barrier(x, y));
-                    break;
-                case DUST:
-                    dust.add(new Dust(x, y));
-                    break;
-                case SWITCH_LEFT:
-                    switchers.add(DirectionSwitcherItem.create(Direction.LEFT, x, y));
-                    break;
-                case SWITCH_RIGHT:
-                    switchers.add(DirectionSwitcherItem.create(Direction.RIGHT, x, y));
-                    break;
-                case SWITCH_UP:
-                    switchers.add(DirectionSwitcherItem.create(Direction.UP, x, y));
-                    break;
-                case SWITCH_DOWN:
-                    switchers.add(DirectionSwitcherItem.create(Direction.DOWN, x, y));
-                    break;
-                case LIMITER_LEFT:
-                    limiters.add(EntryLimiterItem.create(x, y, Direction.LEFT));
-                    break;
-                case LIMITER_RIGHT:
-                    limiters.add(EntryLimiterItem.create(x, y, Direction.RIGHT));
-                    break;
-                case LIMITER_UP:
-                    limiters.add(EntryLimiterItem.create(x, y, Direction.UP));
-                    break;
-                case LIMITER_DOWN:
-                    limiters.add(EntryLimiterItem.create(x, y, Direction.DOWN));
-                    break;
-                case LIMITER_VERTICAL:
-                    limiters.add(EntryLimiterItem.create(x, y, Direction.UP, Direction.DOWN));
-                    break;
-                case LIMITER_HORIZONTAL:
-                    limiters.add(EntryLimiterItem.create(x, y, Direction.LEFT, Direction.RIGHT));
-                    break;
-                case ROUNDABOUT_LEFT_UP:
-                    roundabouts.add(RoundaboutItem.create(x, y, Direction.LEFT, Direction.UP));
-                    break;
-                case ROUNDABOUT_UP_RIGHT:
-                    roundabouts.add(RoundaboutItem.create(x, y, Direction.UP, Direction.RIGHT));
-                    break;
-                case ROUNDABOUT_RIGHT_DOWN:
-                    roundabouts.add(RoundaboutItem.create(x, y, Direction.RIGHT, Direction.DOWN));
-                    break;
-                case ROUNDABOUT_DOWN_LEFT:
-                    roundabouts.add(RoundaboutItem.create(x, y, Direction.DOWN, Direction.LEFT));
-                    break;
-                case NONE:
-                    break;
-                case VACUUM:
-                    throw new IllegalArgumentException("Map should not contain hero declaration, only start point '" + Elements.START.ch() + "'");
-                default:
-                    throw new IllegalArgumentException("Element with code: '" + ch + "' not supported");
-            }
-        }
-        if (!isMapBorderedCorrectly(map)) {
-            throw new IllegalArgumentException("Map should be surrounded by barriers '" + Elements.BARRIER.ch() + "'");
-        }
-        if (start == null) {
-            throw new IllegalArgumentException("Start point '" + Elements.START.ch() + "' should be declared on map");
-        }
-        if (!isMapPassable(map)) {
-            throw new IllegalArgumentException("There is no way to pass this level");
-        }
+        var switchers = getObjects(mapper, map, DirectionSwitcherItem::new,
+                SWITCH_LEFT, SWITCH_UP, SWITCH_RIGHT, SWITCH_DOWN);
+
+        var limiters = getObjects(mapper, map, EntryLimiterItem::new,
+                LIMITER_LEFT, LIMITER_UP, LIMITER_RIGHT, LIMITER_DOWN, LIMITER_HORIZONTAL, LIMITER_VERTICAL);
+
+        var roundabouts = getObjects(mapper, map, RoundaboutItem::new,
+                ROUNDABOUT_LEFT_UP, ROUNDABOUT_UP_RIGHT,  ROUNDABOUT_RIGHT_DOWN, ROUNDABOUT_DOWN_LEFT);
+
         return new Level(size, start, barriers, dust, switchers, limiters, roundabouts);
     }
-
-    private static boolean isMapBorderedCorrectly(String map) {
-        int size = (int) Math.sqrt(map.length());
-        return map.matches(createBorderedMapRegex(size));
-    }
-
-    private static String createBorderedMapRegex(int size) {
-        return String.format("^#{%d}", size) +
-                String.valueOf(String.format("#.{%d}#", size - 2)).repeat(Math.max(0, size - 2)) +
-                String.format("#{%d}$", size);
-    }
-
-    private static boolean isMapPassable(String map) {
-        // TODO: Implement this
-        return true;
-    }
-
 }

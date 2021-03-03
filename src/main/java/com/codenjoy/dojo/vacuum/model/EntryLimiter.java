@@ -44,12 +44,8 @@ public class EntryLimiter {
         this.permittedEntries = Sets.newHashSet(directions);
     }
 
-    public EntryLimiter(int x, int y, Direction... directions) {
+    public EntryLimiter(int x, int y, List<Direction> directions) {
         this(x, y, Sets.newHashSet(directions));
-    }
-
-    public EntryLimiter(EntryLimiter another) {
-        this(another.x, another.y, another.permittedEntries);
     }
 
     public int getX() {
@@ -62,14 +58,6 @@ public class EntryLimiter {
 
     public Point getPosition() {
         return pt(x, y);
-    }
-
-    public void permitFrom(Direction direction) {
-        permittedEntries.add(direction);
-    }
-
-    public void forbidFrom(Direction direction) {
-        permittedEntries.remove(direction);
     }
 
     public List<Direction> getPermittedEntries() {
