@@ -96,6 +96,7 @@ public class GameBoard {
         return switchers;
     }
 
+    @SuppressWarnings("SuspiciousMethodCalls")
     public boolean isCleanPoint(Point point) {
         return !start.equals(point)
                 && !barriers.contains(point)
