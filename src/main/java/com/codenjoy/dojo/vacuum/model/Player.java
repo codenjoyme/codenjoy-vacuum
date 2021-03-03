@@ -28,10 +28,6 @@ import com.codenjoy.dojo.services.multiplayer.GamePlayer;
 import com.codenjoy.dojo.vacuum.services.Event;
 import com.codenjoy.dojo.vacuum.services.GameSettings;
 
-/**
- * Класс игрока. Тут кроме героя может подсчитываться очки.
- * Тут же ивенты передабтся лиснеру фреймворка.
- */
 public class Player extends GamePlayer<Hero, Field> {
 
     Hero hero;

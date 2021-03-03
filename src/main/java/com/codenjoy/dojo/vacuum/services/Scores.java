@@ -30,10 +30,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.codenjoy.dojo.vacuum.services.GameSettings.Keys.CLEANING_ONE_CELL_REWARD;
 import static com.codenjoy.dojo.vacuum.services.GameSettings.Keys.WASTE_OF_TIME_PENALTY;
 
-/**
- * Класс, который умеет подсчитывать очки за те или иные действия.
- * Обычно хочется, чтобы константы очков не были захардкоджены, потому используй объект {@see Settings} для их хранения.
- */
 public class Scores implements PlayerScores {
 
     // TODO выделить так же во всех играх

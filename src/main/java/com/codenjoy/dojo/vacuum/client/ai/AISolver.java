@@ -34,13 +34,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Это алгоритм твоего бота. Он будет запускаться в игру с первым
- * зарегистрировавшимся игроком, чтобы ему не было скучно играть самому.
- * Реализуй его как хочешь, хоть на Random (только используй для этого
- * {@see Dice} что приходит через конструктор).
- * Для его запуска воспользуйся методом {@see ApofigSolver#main}
- */
 public class AISolver implements Solver<Board> {
 
     private DeikstraFindWay way;

@@ -34,12 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Это реализация героя. Обрати внимание, что он имплементит {@see Joystick}, а значит может быть управляем фреймворком
- * Так же он имплементит {@see Tickable}, что значит - есть возможность его оповещать о каждом тике игры.
- * Ну и конечно же он имплементит {@see State}, а значит может быть отрисован на поле.
- * Часть этих интерфейсов объявлены в {@see PlayerHero}, а часть явно тут.
- */
 public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     private static final int RESTART_ACTION = 0;
 

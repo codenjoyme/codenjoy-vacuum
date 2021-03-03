@@ -39,8 +39,6 @@ public interface Field extends GameField<Player> {
 
     boolean isAllClear();
 
-    int getSize();
-
     boolean isDust(Point point);
 
     void removeDust(Point point);

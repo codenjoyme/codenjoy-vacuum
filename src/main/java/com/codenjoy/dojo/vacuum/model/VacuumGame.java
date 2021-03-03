@@ -38,11 +38,6 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-/**
- * О! Это самое сердце игры - борда, на которой все происходит.
- * Если какой-то из жителей борды вдруг захочет узнать что-то у нее, то лучше ему дать интефейс {@see Field}
- * Борда реализует интерфейс {@see Tickable} чтобы быть уведомленной о каждом тике игры. Обрати внимание на {Sample#tick()}
- */
 public class VacuumGame implements Field {
 
     private final List<Player> players = new LinkedList<>();
@@ -82,7 +77,6 @@ public class VacuumGame implements Field {
         return board.isAllClear();
     }
 
-    @Override
     public int getSize() {
         return board.getSize();
     }
