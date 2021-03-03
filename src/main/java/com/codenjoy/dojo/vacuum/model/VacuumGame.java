@@ -67,12 +67,9 @@ public class VacuumGame implements Field {
 
     @Override
     public void tick() {
-        players.forEach(player -> {
-            var hero = player.getHero();
-            hero.tick();
-            hero.getEvents()
-                    .forEach(player::event);
-        });
+        players.stream()
+            .map(Player::getHero)
+            .forEach(Hero::tick);
     }
 
     @Override

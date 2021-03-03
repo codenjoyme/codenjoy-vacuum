@@ -30,8 +30,6 @@ import com.codenjoy.dojo.services.multiplayer.PlayerHero;
 import com.codenjoy.dojo.vacuum.model.items.Roundabout;
 import com.codenjoy.dojo.vacuum.services.Event;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
@@ -39,12 +37,16 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     private static final int RESTART_ACTION = 0;
 
     private Direction direction;
-    private List<Event> events;
     private boolean reset = false;
-    private boolean levelPassed = false;
+    private boolean win = false;
+    private Player player;
 
     public Hero(Point xy) {
         super(xy);
+    }
+
+    public void init(Player player) {
+        this.player = player;
     }
 
     @Override
@@ -79,29 +81,27 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     }
 
     @Override
-    public void act(int... codes) {
-        if (codes.length > 0 && codes[0] == RESTART_ACTION) {
+    public void act(int... p) {
+        if (p.length > 0 && p[0] == RESTART_ACTION) {
             reset = true;
         }
     }
 
     @Override
     public void tick() {
-        events = new ArrayList<>();
-
         if (direction != null) {
-            goTo(direction.change(this.copy()));
+            tryMove(direction.change(this.copy()));
         }
 
         if (field.isAllClear()) {
-            events.add(Event.ALL_CLEAR);
-            levelPassed = true;
+            player.event(Event.ALL_CLEAR);
+            win = true;
         }
     }
 
-    private void goTo(Point pt) {
-        Boolean isNotEntryLimited = field.limiter(pt)
-                .map(l -> l.canEnterFrom(this))
+    public void tryMove(Point pt) {
+        boolean isNotEntryLimited = field.limiter(pt)
+                .map(limiter -> limiter.canEnterFrom(this))
                 .orElse(true);
 
         Optional<Roundabout> roundabout = field.roundabout(pt);
@@ -114,30 +114,25 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
             return;
         }
 
-        roundabout.ifPresent(r -> this.direction = r.enterFrom(this));
+        roundabout.ifPresent(r -> direction = r.enterFrom(this));
         move(pt);
 
         field.switcher(pt)
-                .ifPresent(s -> this.direction = s.direction());
+                .ifPresent(s -> direction = s.direction());
 
         if (field.isCleanPoint(pt)) {
-            events.add(Event.TIME_WASTED);
+            player.event(Event.TIME_WASTED);
         }
 
         if (field.isDust(pt)) {
             field.removeDust(pt);
-            events.add(Event.DUST_CLEANED);
+            player.event(Event.DUST_CLEANED);
         }
 
         Point next = direction.change(pt);
         if (field.isBarrier(next)) {
             direction = null;
         }
-
-    }
-
-    public List<Event> getEvents() {
-        return events;
     }
 
     @Override
@@ -145,8 +140,8 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
         return Elements.VACUUM;
     }
 
-    public boolean levelPassed() {
-        return levelPassed;
+    public boolean win() {
+        return win;
     }
 
     public boolean reset() {
