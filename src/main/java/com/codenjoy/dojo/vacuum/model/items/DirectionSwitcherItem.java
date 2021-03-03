@@ -34,19 +34,20 @@ import static com.codenjoy.dojo.services.Direction.*;
 import static com.codenjoy.dojo.vacuum.model.Elements.*;
 
 public class DirectionSwitcherItem extends AbstractItem {
-    private static final Map<Elements, Direction> elementsToDirections = new HashMap<>();
-    static {
-        elementsToDirections.put(SWITCH_LEFT, LEFT);
-        elementsToDirections.put(SWITCH_UP, UP);
-        elementsToDirections.put(SWITCH_RIGHT, RIGHT);
-        elementsToDirections.put(SWITCH_DOWN, DOWN);
-    }
+
+    private static final Map<Elements, Direction> elements =
+            new HashMap<>(){{
+                put(SWITCH_LEFT, LEFT);
+                put(SWITCH_UP, UP);
+                put(SWITCH_RIGHT, RIGHT);
+                put(SWITCH_DOWN, DOWN);
+            }};
 
     private final DirectionSwitcher switcher;
 
-    public DirectionSwitcherItem(Point point, Elements element) {
-        super(point, element);
-        this.switcher = new DirectionSwitcher(point.getX(), point.getY(), elementsToDirections.get(element));
+    public DirectionSwitcherItem(Point pt, Elements element) {
+        super(pt, element);
+        this.switcher = new DirectionSwitcher(pt, elements.get(element));
     }
 
     public Direction getDirection() {

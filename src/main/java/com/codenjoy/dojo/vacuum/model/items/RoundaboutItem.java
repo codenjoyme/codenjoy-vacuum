@@ -30,6 +30,7 @@ import com.codenjoy.dojo.vacuum.model.Roundabout;
 import java.util.List;
 
 public class RoundaboutItem extends AbstractItem {
+
     private final Roundabout roundabout;
 
     private static Elements elementByDirections(List<Direction> directions) {
@@ -53,36 +54,32 @@ public class RoundaboutItem extends AbstractItem {
         throw new IllegalArgumentException("Roundabout with direction [" + directions.get(0) + ", " + directions.get(1) + "] is not supported");
     }
 
-    private RoundaboutItem(Elements element, int x, int y) {
-        super(element, x, y);
+    public RoundaboutItem(Point pt, Elements element) {
+        super(pt, element);
         switch (element) {
             case ROUNDABOUT_LEFT_UP:
-                this.roundabout = new Roundabout(x, y, Direction.LEFT, Direction.UP);
+                this.roundabout = new Roundabout(pt, Direction.LEFT, Direction.UP);
                 break;
             case ROUNDABOUT_UP_RIGHT:
-                this.roundabout = new Roundabout(x, y, Direction.UP, Direction.RIGHT);
+                this.roundabout = new Roundabout(pt, Direction.UP, Direction.RIGHT);
                 break;
             case ROUNDABOUT_RIGHT_DOWN:
-                this.roundabout = new Roundabout(x, y, Direction.RIGHT, Direction.DOWN);
+                this.roundabout = new Roundabout(pt, Direction.RIGHT, Direction.DOWN);
                 break;
             case ROUNDABOUT_DOWN_LEFT:
-                this.roundabout = new Roundabout(x, y, Direction.DOWN, Direction.LEFT);
+                this.roundabout = new Roundabout(pt, Direction.DOWN, Direction.LEFT);
                 break;
             default:
                 throw new IllegalArgumentException("Element " + element + " is not supported");
         }
     }
 
-    public RoundaboutItem(Point point, Elements element) {
-        this(element, point.getX(), point.getY());
+    public boolean canEnterFrom(Point pt) {
+        return roundabout.canEnterFrom(pt);
     }
 
-    public boolean canEnterFrom(Point point) {
-        return roundabout.canEnterFrom(point);
-    }
-
-    public Direction enterFrom(Point point) {
-        Direction exitDirection = roundabout.enterFrom(point);
+    public Direction enterFrom(Point pt) {
+        Direction exitDirection = roundabout.enterFrom(pt);
         this.setElement(elementByDirections(roundabout.getDirections()));
         return exitDirection;
     }

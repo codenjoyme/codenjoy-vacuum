@@ -23,31 +23,21 @@ package com.codenjoy.dojo.vacuum.model;
  */
 
 import com.codenjoy.dojo.services.Direction;
+import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.PointImpl;
 
-public class DirectionSwitcher {
-    private final int x;
-    private final int y;
+public class DirectionSwitcher extends PointImpl {
+
     private Direction direction;
 
-    public DirectionSwitcher(int x, int y, Direction direction) {
+    public DirectionSwitcher(Point point, Direction direction) {
+        super(point);
         if (direction == null) {
             throw new IllegalArgumentException("Direction can not be null");
         }
         this.x = x;
         this.y = y;
         this.direction = direction;
-    }
-
-    public DirectionSwitcher(DirectionSwitcher another) {
-        this(another.x, another.y, another.direction);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public void setDirection(Direction direction) {

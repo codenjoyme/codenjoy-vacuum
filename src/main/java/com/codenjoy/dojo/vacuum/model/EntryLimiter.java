@@ -24,6 +24,7 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.PointImpl;
 import com.google.common.collect.Sets;
 
 import java.util.ArrayList;
@@ -31,46 +32,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.codenjoy.dojo.services.PointImpl.pt;
+public class EntryLimiter extends PointImpl {
 
-public class EntryLimiter {
-    private final int x;
-    private final int y;
-    private Set<Direction> permittedEntries;
+    private Set<Direction> permitted;
 
-    public EntryLimiter(int x, int y, Iterable<Direction> directions) {
-        this.x = x;
-        this.y = y;
-        this.permittedEntries = Sets.newHashSet(directions);
+    public EntryLimiter(Point pt, List<Direction> directions) {
+        super(pt);
+        this.permitted = Sets.newHashSet(directions);
     }
 
-    public EntryLimiter(int x, int y, List<Direction> directions) {
-        this(x, y, Sets.newHashSet(directions));
+    public List<Direction> getPermitted() {
+        return new ArrayList<>(permitted);
     }
 
-    public int getX() {
-        return x;
+    public void setPermitted(List<Direction> entries) {
+        this.permitted = new HashSet<>(entries);
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public Point getPosition() {
-        return pt(x, y);
-    }
-
-    public List<Direction> getPermittedEntries() {
-        return new ArrayList<>(permittedEntries);
-    }
-
-    public void setPermittedEntries(List<Direction> entries) {
-        this.permittedEntries = new HashSet<>(entries);
-    }
-
-    public boolean canEnterFrom(Point point) {
-        return permittedEntries.stream()
-                .map(d -> d.change(this.getPosition()))
-                .anyMatch(p -> p.equals(point));
+    public boolean canEnterFrom(Point from) {
+        return permitted.stream()
+                .map(direction -> direction.change(this))
+                .anyMatch(pt -> pt.equals(from));
     }
 }

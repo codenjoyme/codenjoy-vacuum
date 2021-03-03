@@ -70,17 +70,15 @@ public class VacuumGame implements Field {
         players.forEach(player -> {
             var hero = player.getHero();
             hero.tick();
-            hero.getEvents().forEach(player::event);
+            hero.getEvents()
+                    .forEach(player::event);
         });
     }
 
-    public boolean isInBounds(int x, int y) {
-        return x >= 0 && x < size && y >= 0 && y < size;
-    }
-
-    public boolean isBarrier(int x, int y) {
-        return barriers.stream()
-                .anyMatch(b -> b.getX() == x && b.getY() == y);
+    @Override
+    public boolean isBarrier(Point pt) {
+        return pt.isOutOf(size)
+                || anyMatch(barriers, pt);
     }
 
     @Override
@@ -89,42 +87,44 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<DirectionSwitcherItem> getDirectionSwitcher(Point point) {
-        return switchers.stream()
-                .filter(s -> s.getX() == point.getX() && s.getY() == point.getY())
+    public Optional<DirectionSwitcherItem> getDirectionSwitcher(Point pt) {
+        return found(switchers, pt);
+    }
+
+    public <T extends Point> Optional<T> found(List<T> items, Point pt) {
+        return items.stream()
+                .filter(pt::equals)
                 .findFirst();
     }
 
-    @Override
-    public boolean isCleanPoint(Point point) {
-        return !start.equals(point)
-                && !barriers.contains(point)
-                && !dust.contains(point)
-                && !switchers.contains(point)
-                && !limiters.contains(point)
-                && !roundabouts.contains(point);
+    public <T extends Point> boolean anyMatch(List<T> items, Point pt) {
+        return items.stream()
+                .anyMatch(pt::equals);
     }
 
     @Override
-    public boolean isDust(Point point) {
-        return dust.stream()
-                .anyMatch(d -> d.equals(point));
+    public boolean isCleanPoint(Point pt) {
+        return !start.equals(pt)
+                && !barriers.contains(pt)
+                && !dust.contains(pt)
+                && !switchers.contains(pt)
+                && !limiters.contains(pt)
+                && !roundabouts.contains(pt);
     }
 
     @Override
-    public void removeDust(Point point) {
-        Dust dustCell = dust.stream()
-                .filter(d -> d.equals(point))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("There is no dust at point: " + point));
-        dust.remove(dustCell);
+    public boolean isDust(Point pt) {
+        return anyMatch(dust, pt);
     }
 
     @Override
-    public Optional<EntryLimiterItem> getDirectionLimiter(Point point) {
-        return limiters.stream()
-                .filter(l -> l.equals(point))
-                .findFirst();
+    public void removeDust(Point pt) {
+        dust.remove(pt);
+    }
+
+    @Override
+    public Optional<EntryLimiterItem> getDirectionLimiter(Point pt) {
+        return found(limiters, pt);
     }
 
     @Override
@@ -132,21 +132,13 @@ public class VacuumGame implements Field {
         return start;
     }
 
-    @Override
-    public boolean isBarrier(Point destination) {
-        int x = destination.getX();
-        int y = destination.getY();
-        return isInBounds(x, y) && isBarrier(x, y);
-    }
-
     public int getSize() {
         return size;
     }
 
     @Override
-    public Optional<RoundaboutItem> getRoundabout(Point destination) {
-        return roundabouts.stream()
-                .filter(r -> r.equals(destination)).findFirst();
+    public Optional<RoundaboutItem> getRoundabout(Point pt) {
+        return found(roundabouts, pt);
     }
 
     public List<Hero> getHeroes() {

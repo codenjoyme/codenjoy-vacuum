@@ -29,12 +29,8 @@ import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.vacuum.model.Player;
 
 public abstract class AbstractItem extends PointImpl implements State<Elements, Player> {
-    private Elements element;
 
-    public AbstractItem(Elements element, int x, int y) {
-        super(x, y);
-        this.element = element;
-    }
+    private Elements element;
 
     public AbstractItem(Point point, Elements element) {
         super(point);

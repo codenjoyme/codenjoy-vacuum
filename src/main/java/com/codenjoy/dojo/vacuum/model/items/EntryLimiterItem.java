@@ -36,28 +36,25 @@ import static com.codenjoy.dojo.services.Direction.*;
 import static com.codenjoy.dojo.vacuum.model.Elements.*;
 
 public class EntryLimiterItem extends AbstractItem {
-    private static final Map<Elements, List<Direction>> elementsToDirections = new HashMap<>();
-    static {
-        elementsToDirections.put(LIMITER_LEFT, Lists.newArrayList(LEFT));
-        elementsToDirections.put(LIMITER_UP, Lists.newArrayList(UP));
-        elementsToDirections.put(LIMITER_RIGHT, Lists.newArrayList(RIGHT));
-        elementsToDirections.put(LIMITER_DOWN, Lists.newArrayList(DOWN));
-        elementsToDirections.put(LIMITER_HORIZONTAL, Lists.newArrayList(LEFT, RIGHT));
-        elementsToDirections.put(LIMITER_VERTICAL, Lists.newArrayList(UP, DOWN));
-    }
+
+    private static final Map<Elements, List<Direction>> elements =
+            new HashMap<>(){{
+                put(LIMITER_LEFT, Lists.newArrayList(LEFT));
+                put(LIMITER_UP, Lists.newArrayList(UP));
+                put(LIMITER_RIGHT, Lists.newArrayList(RIGHT));
+                put(LIMITER_DOWN, Lists.newArrayList(DOWN));
+                put(LIMITER_HORIZONTAL, Lists.newArrayList(LEFT, RIGHT));
+                put(LIMITER_VERTICAL, Lists.newArrayList(UP, DOWN));
+            }};
 
     private final EntryLimiter limiter;
 
-    private EntryLimiterItem(Elements element, int x, int y) {
-        super(element, x, y);
-        this.limiter = new EntryLimiter(x, y, elementsToDirections.get(element));
+    public EntryLimiterItem(Point pt, Elements element) {
+        super(pt, element);
+        this.limiter = new EntryLimiter(pt, elements.get(element));
     }
 
-    public EntryLimiterItem(Point point, Elements element) {
-        this(element, point.getX(), point.getY());
-    }
-
-    public boolean canEnterFrom(Point point) {
-        return limiter.canEnterFrom(point);
+    public boolean canEnterFrom(Point pt) {
+        return limiter.canEnterFrom(pt);
     }
 }

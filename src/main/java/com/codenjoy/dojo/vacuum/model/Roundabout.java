@@ -28,40 +28,21 @@ import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 import com.google.common.collect.Sets;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 
 // TODO make it able to treat more than 2 directions
-public class Roundabout {
+public class Roundabout extends PointImpl {
+
     private final EntryLimiter limiter;
-    private final int x;
-    private final int y;
 
-    public Roundabout(int x, int y, Iterable<Direction> directions) {
-        this.x = x;
-        this.y = y;
-        this.limiter = new EntryLimiter(x, y, directions);
-    }
-
-    public Roundabout(int x, int y, Direction... directions) {
-        this(x, y, Sets.newHashSet(directions));
-    }
-
-    public Roundabout(Roundabout another) {
-        this(another.x, another.y, another.limiter.getPermittedEntries());
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public Point getPosition() {
-        return new PointImpl(x, y);
+    public Roundabout(Point pt, Direction... directions) {
+        super(pt);
+        this.limiter = new EntryLimiter(pt, Arrays.asList(directions));
     }
 
     public boolean canEnterFrom(Point point) {
@@ -69,15 +50,14 @@ public class Roundabout {
     }
 
     public Direction enterFrom(Point point) {
-        List<Direction> entries = limiter.getPermittedEntries();
-        Point position = getPosition();
+        List<Direction> entries = limiter.getPermitted();
         if (entries.size() > 2) {
             throw new IllegalStateException("Roundabout can treat exactly 2 directions");
         }
         Direction exitDirection = null;
-        if (entries.get(0).change(position).equals(point)) {
+        if (entries.get(0).change(this).equals(point)) {
             exitDirection = entries.get(1);
-        } else if (entries.get(1).change(position).equals(point)) {
+        } else if (entries.get(1).change(this).equals(point)) {
             exitDirection = entries.get(0);
         } else {
             throw new IllegalArgumentException("Entry from point " + point + " is prohibited");
@@ -90,14 +70,14 @@ public class Roundabout {
         rotate(false);
     }
 
-    private void rotate(boolean counterClockwise) {
-        List<Direction> rotatedEntries = limiter.getPermittedEntries().stream()
-                .map(e -> counterClockwise ? e.counterClockwise() : e.clockwise())
-                .collect(Collectors.toList());
-        limiter.setPermittedEntries(rotatedEntries);
+    private void rotate(boolean counter) {
+        List<Direction> rotated = limiter.getPermitted().stream()
+                .map(e -> counter ? e.counterClockwise() : e.clockwise())
+                .collect(toList());
+        limiter.setPermitted(rotated);
     }
 
     public List<Direction> getDirections() {
-        return limiter.getPermittedEntries();
+        return limiter.getPermitted();
     }
 }
