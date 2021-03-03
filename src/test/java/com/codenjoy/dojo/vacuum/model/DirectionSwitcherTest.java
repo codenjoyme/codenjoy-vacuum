@@ -32,6 +32,7 @@ public class DirectionSwitcherTest extends AbstractGameTest {
 
     @Test
     public void vacuumShouldChangeDirection_whenSteppingOnDirectionSwitcher() {
+        // given
         givenFl("######" +
                 "#S ↓ #" +
                 "# →  #" +
@@ -39,11 +40,14 @@ public class DirectionSwitcherTest extends AbstractGameTest {
                 "#    #" +
                 "######");
 
+        // when
         hero.right();
         game.tick();
         game.tick();
         game.tick();
         game.tick();
+
+        // then
         assertE("######" +
                 "#S ↓ #" +
                 "# →  #" +
@@ -52,6 +56,7 @@ public class DirectionSwitcherTest extends AbstractGameTest {
                 "######");
 
         game.tick();
+
         assertE("######" +
                 "#S ↓ #" +
                 "# →  #" +
@@ -61,6 +66,7 @@ public class DirectionSwitcherTest extends AbstractGameTest {
 
         game.tick();
         game.tick();
+
         assertE("######" +
                 "#S ↓ #" +
                 "# →O #" +
@@ -69,6 +75,7 @@ public class DirectionSwitcherTest extends AbstractGameTest {
                 "######");
 
         game.tick();
+
         assertE("######" +
                 "#S ↓ #" +
                 "# → O#" +
@@ -79,6 +86,7 @@ public class DirectionSwitcherTest extends AbstractGameTest {
 
     @Test
     public void shouldTurnAround_whenStepOnSwitcherInOppositeDirection() {
+        // given
         givenFl("######" +
                 "#S   #" +
                 "#    #" +
@@ -86,10 +94,13 @@ public class DirectionSwitcherTest extends AbstractGameTest {
                 "#↑   #" +
                 "######");
 
+        // when
         hero.down();
         game.tick();
         game.tick();
         game.tick();
+
+        // then
         assertE("######" +
                 "#S   #" +
                 "#    #" +
@@ -100,6 +111,7 @@ public class DirectionSwitcherTest extends AbstractGameTest {
         game.tick();
         game.tick();
         game.tick();
+
         assertE("######" +
                 "#O   #" +
                 "#    #" +
@@ -110,17 +122,21 @@ public class DirectionSwitcherTest extends AbstractGameTest {
 
     @Test
     public void shouldNotBeFined_whenStepOnSwitcher() {
+        // given
         givenFl("#####" +
                 "#S↓ #" +
                 "#↑← #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
         game.tick();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#O↓ #" +
                 "#↑← #" +

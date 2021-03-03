@@ -39,12 +39,14 @@ public class VacuumTest extends AbstractGameTest {
 
     @Test
     public void shouldSpawnOnStartPoint() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# S #" +
                 "#   #" +
                 "#####");
 
+        // when then
         assertE("#####" +
                 "#   #" +
                 "# O #" +
@@ -54,22 +56,25 @@ public class VacuumTest extends AbstractGameTest {
 
     @Test
     public void shouldGoUntilBarrier() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "#   #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.down();
         game.tick();
 
+        // then
         assertE("#####" +
                 "# S #" +
                 "# O #" +
                 "#   #" +
                 "#####");
 
-        hero.right(); // Should not affect
+        hero.right(); // should not affect
         game.tick();
 
         assertE("#####" +
@@ -86,9 +91,11 @@ public class VacuumTest extends AbstractGameTest {
                 "# O #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
 
+        // then
         assertE("#####" +
                 "# S #" +
                 "#   #" +
@@ -106,15 +113,18 @@ public class VacuumTest extends AbstractGameTest {
 
     @Test
     public void shouldBeAbleToChangeDirection_whenStopped() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "#   #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
 
+        // then
         assertE("#####" +
                 "# SO#" +
                 "#   #" +
@@ -133,16 +143,18 @@ public class VacuumTest extends AbstractGameTest {
 
     @Test
     public void shouldCleanDust() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "#***#" +
                 "#***#" +
                 "#####");
 
+        // when
         hero.down();
         game.tick();
 
-
+        // then
         assertE("#####" +
                 "# S #" +
                 "#*O*#" +
@@ -162,16 +174,19 @@ public class VacuumTest extends AbstractGameTest {
 
     @Test
     public void shouldBeenFined_whenWastingTime() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "#* *#" +
                 "#* *#" +
                 "#####");
 
+        // when
         hero.down();
         game.tick();
         game.tick();
 
+        // then
         assertE("#####" +
                 "# S #" +
                 "#* *#" +
@@ -183,26 +198,32 @@ public class VacuumTest extends AbstractGameTest {
 
     @Test
     public void shouldWin_whenAllClear() {
+        // given
         givenFl("#####" +
                 "#S**#" +
                 "#* *#" +
                 "#***#" +
                 "#####");
 
-        // Clean all of the dust
+        // when
+        // clean all of the dust
         hero.right();
         game.tick();
         game.tick();
         game.tick();
+
         hero.down();
         game.tick();
         game.tick();
+
         hero.left();
         game.tick();
         game.tick();
+
         hero.up();
         game.tick();
 
+        // then
         assertE("#####" +
                 "#S  #" +
                 "#O  #" +
@@ -217,16 +238,20 @@ public class VacuumTest extends AbstractGameTest {
 
     @Test
     public void shouldNotBeFined_whenSteppingOnStartPoint() {
+        // given
         givenFl("####" +
                 "#S*#" +
                 "#**#" +
                 "####");
 
+        // when
         hero.right();
         game.tick();
+
         hero.left();
         game.tick();
 
+        // then
         assertE("####" +
                 "#O #" +
                 "#**#" +
@@ -237,16 +262,19 @@ public class VacuumTest extends AbstractGameTest {
 
     @Test
     public void shouldNotBeFined_whenDoNothingAtGameTick() {
+        // given
         givenFl("#####" +
                 "#S**#" +
                 "#* *#" +
                 "#***#" +
                 "#####");
 
+        // when
         game.tick();
         game.tick();
         game.tick();
 
+        // then
         verify(listener, never()).event(TIME_WASTED);
     }
 

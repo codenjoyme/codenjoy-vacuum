@@ -32,42 +32,55 @@ public class RoundaboutTest extends AbstractGameTest {
 
     @Test
     public void shouldRotateRoundabout_whenGoingThroughIt() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┌S#" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.left();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "# ┐S#" +
                 "# O #" +
                 "#####");
 
+        // when
         hero.up();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "#O┘S#" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "# O #" +
                 "# └S#" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.down();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "# ┌O#" +
@@ -76,57 +89,81 @@ public class RoundaboutTest extends AbstractGameTest {
     }
 
     @Test
-    public void shouldBeBelowRobot_whenStandingOnIt() {
+    public void shouldBeBelowRobot_whenStandingOnIt_case1() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┌S#" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.left();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "# OS#" +
                 "#   #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldBeBelowRobot_whenStandingOnIt_case2() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┐ #" +
                 "# S #" +
                 "#####");
 
+        // when
         hero.up();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "# O #" +
                 "# S #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldBeBelowRobot_whenStandingOnIt_case3() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "#S┘ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "#SO #" +
                 "#   #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldBeBelowRobot_whenStandingOnIt_case4() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "# └ #" +
                 "#   #" +
                 "#####");
-
+        // when
         hero.down();
         game.tick();
+
+        // then
         assertE("#####" +
                 "# S #" +
                 "# O #" +
@@ -135,101 +172,150 @@ public class RoundaboutTest extends AbstractGameTest {
     }
 
     @Test
-    public void shouldNotBeFined_whenSandingOnRoundabout() {
+    public void shouldNotBeFined_whenSandingOnRoundabout_case1() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┌S#" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.left();
         game.tick();
 
+        // then
         verify(listener, never()).event(Event.TIME_WASTED);
+    }
+
+    @Test
+    public void shouldNotBeFined_whenSandingOnRoundabout_case2() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┐ #" +
                 "# S #" +
                 "#####");
 
+        // when
         hero.up();
         game.tick();
 
+        // then
         verify(listener, never()).event(Event.TIME_WASTED);
+    }
+
+    @Test
+    public void shouldNotBeFined_whenSandingOnRoundabout_case3() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "#S┘ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
-        verify(listener, never()).event(Event.TIME_WASTED);
 
+        // then
+        verify(listener, never()).event(Event.TIME_WASTED);
+    }
+
+    @Test
+    public void shouldNotBeFined_whenSandingOnRoundabout_case4() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "# └ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.down();
         game.tick();
+
+        // then
         verify(listener, never()).event(Event.TIME_WASTED);
     }
 
     @Test
-    public void shouldNotBeAbleToEnterFromProhibitedSide() {
+    public void shouldNotBeAbleToEnterFromProhibitedSide_case1() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "#S└ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "#O└ #" +
                 "#   #" +
                 "#####");
+    }
 
-
+    @Test
+    public void shouldNotBeAbleToEnterFromProhibitedSide_case2() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "#S┌ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "#O┌ #" +
                 "#   #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldNotBeAbleToEnterFromProhibitedSide_case3() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "# ┐ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.down();
         game.tick();
+
+        // then
         assertE("#####" +
                 "# O #" +
                 "# ┐ #" +
                 "#   #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldNotBeAbleToEnterFromProhibitedSide_case4() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┘S#" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.left();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "# ┘O#" +
@@ -238,125 +324,174 @@ public class RoundaboutTest extends AbstractGameTest {
     }
 
     @Test
-    public void shouldBeAbleToEnterFromPermittedSide() {
-        // UP_RIGHT
+    public void shouldBeAbleToEnterFromPermittedSide_case1() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "# └ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.down();
         game.tick();
+
+        // then
         game.tick();
         assertE("#####" +
                 "# S #" +
                 "# ┌O#" +
                 "#   #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldBeAbleToEnterFromPermittedSide_case2() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# └S#" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.left();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "# O #" +
                 "# ┌S#" +
                 "#   #" +
                 "#####");
+    }
 
-        // RIGHT_DOWN
+    @Test
+    public void shouldBeAbleToEnterFromPermittedSide_case3() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┌S#" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.left();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "# ┐S#" +
                 "# O #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldBeAbleToEnterFromPermittedSide_case4() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┌ #" +
                 "# S #" +
                 "#####");
 
+        // when
         hero.up();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "# ┐O#" +
                 "# S #" +
                 "#####");
+    }
 
-        // DOWN_LEFT
+    @Test
+    public void shouldBeAbleToEnterFromPermittedSide_case5() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "# ┐ #" +
                 "# S #" +
                 "#####");
 
+        // when
         hero.up();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "#O┘ #" +
                 "# S #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldBeAbleToEnterFromPermittedSide_case6() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "#S┐ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "#   #" +
                 "#S┘ #" +
                 "# O #" +
                 "#####");
+    }
 
-        // LEFT_UP
+    @Test
+    public void shouldBeAbleToEnterFromPermittedSide_case7() {
+        // given
         givenFl("#####" +
                 "#   #" +
                 "#S┘ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.right();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "# O #" +
                 "#S└ #" +
                 "#   #" +
                 "#####");
+    }
 
+    @Test
+    public void shouldBeAbleToEnterFromPermittedSide_case8() {
+        // given
         givenFl("#####" +
                 "# S #" +
                 "# ┘ #" +
                 "#   #" +
                 "#####");
 
+        // when
         hero.down();
         game.tick();
         game.tick();
+
+        // then
         assertE("#####" +
                 "# S #" +
                 "#O└ #" +
