@@ -25,8 +25,7 @@ package com.codenjoy.dojo.vacuum.model;
 import com.codenjoy.dojo.vacuum.services.Event;
 import org.junit.Test;
 
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static com.codenjoy.dojo.vacuum.services.Event.TIME_WASTED;
 
 public class RoundaboutTest extends AbstractGameTest {
 
@@ -185,7 +184,7 @@ public class RoundaboutTest extends AbstractGameTest {
         game.tick();
 
         // then
-        verify(listener, never()).event(Event.TIME_WASTED);
+        neverFired(TIME_WASTED);
     }
 
     @Test
@@ -202,7 +201,7 @@ public class RoundaboutTest extends AbstractGameTest {
         game.tick();
 
         // then
-        verify(listener, never()).event(Event.TIME_WASTED);
+        neverFired(TIME_WASTED);
     }
 
     @Test
@@ -219,7 +218,7 @@ public class RoundaboutTest extends AbstractGameTest {
         game.tick();
 
         // then
-        verify(listener, never()).event(Event.TIME_WASTED);
+        neverFired(TIME_WASTED);
     }
 
     @Test
@@ -236,7 +235,7 @@ public class RoundaboutTest extends AbstractGameTest {
         game.tick();
 
         // then
-        verify(listener, never()).event(Event.TIME_WASTED);
+        neverFired(TIME_WASTED);
     }
 
     @Test

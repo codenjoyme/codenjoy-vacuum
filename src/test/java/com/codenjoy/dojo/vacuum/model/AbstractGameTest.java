@@ -28,11 +28,13 @@ import com.codenjoy.dojo.services.printer.PrinterFactory;
 import com.codenjoy.dojo.services.printer.PrinterFactoryImpl;
 import com.codenjoy.dojo.utils.TestUtils;
 import com.codenjoy.dojo.vacuum.model.level.Level;
+import com.codenjoy.dojo.vacuum.services.Event;
 import com.codenjoy.dojo.vacuum.services.GameSettings;
 import org.junit.Before;
+import org.mockito.ArgumentCaptor;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public abstract class AbstractGameTest {
 
@@ -63,5 +65,15 @@ public abstract class AbstractGameTest {
     protected void assertE(String expected) {
         assertEquals(TestUtils.injectN(expected),
                 printer.getPrinter(game.reader(), player).print());
+    }
+
+    protected void neverFired(Event event) {
+        verify(listener, never()).event(event);
+    }
+
+    public void fired(String expected) {
+        ArgumentCaptor<Event> captor = ArgumentCaptor.forClass(Event.class);
+        verify(listener, times(expected.split(",").length)).event(captor.capture());
+        assertEquals(expected, captor.getAllValues().toString());
     }
 }

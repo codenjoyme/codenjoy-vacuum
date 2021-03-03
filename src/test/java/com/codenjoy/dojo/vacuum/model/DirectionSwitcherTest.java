@@ -25,8 +25,7 @@ package com.codenjoy.dojo.vacuum.model;
 import com.codenjoy.dojo.vacuum.services.Event;
 import org.junit.Test;
 
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static com.codenjoy.dojo.vacuum.services.Event.TIME_WASTED;
 
 public class DirectionSwitcherTest extends AbstractGameTest {
 
@@ -143,6 +142,6 @@ public class DirectionSwitcherTest extends AbstractGameTest {
                 "#   #" +
                 "#####");
 
-        verify(listener, never()).event(Event.TIME_WASTED);
+        neverFired(TIME_WASTED);
     }
 }

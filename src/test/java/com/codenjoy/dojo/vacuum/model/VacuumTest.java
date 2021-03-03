@@ -22,18 +22,9 @@ package com.codenjoy.dojo.vacuum.model;
  * #L%
  */
 
-import com.codenjoy.dojo.vacuum.services.Event;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 
-import java.util.List;
-import java.util.Objects;
-
-import static com.codenjoy.dojo.vacuum.services.Event.*;
-import static com.codenjoy.dojo.vacuum.services.Event.DUST_CLEANED;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static com.codenjoy.dojo.vacuum.services.Event.TIME_WASTED;
 
 public class VacuumTest extends AbstractGameTest {
 
@@ -169,7 +160,7 @@ public class VacuumTest extends AbstractGameTest {
                 "#*O*#" +
                 "#####");
 
-        verify(listener, times(2)).event(DUST_CLEANED);
+        fired("[DUST_CLEANED, DUST_CLEANED]");
     }
 
     @Test
@@ -193,7 +184,7 @@ public class VacuumTest extends AbstractGameTest {
                 "#*O*#" +
                 "#####");
 
-        verify(listener, times(2)).event(TIME_WASTED);
+        fired("[TIME_WASTED, TIME_WASTED]");
     }
 
     @Test
@@ -230,10 +221,9 @@ public class VacuumTest extends AbstractGameTest {
                 "#   #" +
                 "#####");
 
-        ArgumentCaptor<Event> eventCaptor = ArgumentCaptor.forClass(Event.class);
-        verify(listener, times(8)).event(eventCaptor.capture());
-        assertEquals(ALL_CLEAR, eventCaptor.getAllValues().get(7));
-        assertTrue(containsOnly(eventCaptor.getAllValues().subList(0, 6), DUST_CLEANED));
+        fired("[DUST_CLEANED, DUST_CLEANED, DUST_CLEANED, " +
+                "DUST_CLEANED, DUST_CLEANED, DUST_CLEANED, " +
+                "DUST_CLEANED, ALL_CLEAR]");
     }
 
     @Test
@@ -257,7 +247,7 @@ public class VacuumTest extends AbstractGameTest {
                 "#**#" +
                 "####");
 
-        verify(listener, never()).event(TIME_WASTED);
+        neverFired(TIME_WASTED);
     }
 
     @Test
@@ -275,15 +265,6 @@ public class VacuumTest extends AbstractGameTest {
         game.tick();
 
         // then
-        verify(listener, never()).event(TIME_WASTED);
-    }
-
-    private boolean containsOnly(List<?> list, Object value) {
-        for (Object o : list) {
-            if (!Objects.equals(o, value)) {
-                return false;
-            }
-        }
-        return true;
+        neverFired(TIME_WASTED);
     }
 }
