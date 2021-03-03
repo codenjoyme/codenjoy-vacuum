@@ -39,7 +39,8 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
 
     private Direction direction;
     private List<Event> events;
-    private boolean restartRequested = false;
+    private boolean reset = false;
+    private boolean levelPassed = false;
 
     public Hero(Point xy) {
         super(xy);
@@ -81,7 +82,7 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     @Override
     public void act(int... codes) {
         if (codes.length > 0 && codes[0] == RESTART_ACTION) {
-            restartRequested = true;
+            reset = true;
         }
     }
 
@@ -89,52 +90,47 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     public void tick() {
         events = new ArrayList<>();
 
-        if (restartRequested) {
-            events.add(Event.RESTART);
-            return;
-        }
-
         if (direction != null) {
-            Point destination = direction.change(this.copy());
-            goTo(destination);
+            goTo(direction.change(this.copy()));
         }
 
         if (field.isAllClear()) {
             events.add(Event.ALL_CLEAR);
+            levelPassed = true;
         }
     }
 
-    private void goTo(Point destination) {
-        Boolean isNotEntryLimited = field.limiter(destination)
+    private void goTo(Point pt) {
+        Boolean isNotEntryLimited = field.limiter(pt)
                 .map(l -> l.canEnterFrom(this))
                 .orElse(true);
 
-        Optional<Roundabout> roundabout = field.roundabout(destination);
+        Optional<Roundabout> roundabout = field.roundabout(pt);
 
         isNotEntryLimited &= roundabout.map(r -> r.canEnterFrom(this))
                 .orElse(true);
 
-        if (field.isBarrier(destination) || !isNotEntryLimited) {
+        if (field.isBarrier(pt) || !isNotEntryLimited) {
             direction = null;
             return;
         }
 
         roundabout.ifPresent(r -> this.direction = r.enterFrom(this));
-        move(destination);
+        move(pt);
 
-        field.switcher(destination)
+        field.switcher(pt)
                 .ifPresent(s -> this.direction = s.direction());
 
-        if (field.isCleanPoint(destination)) {
+        if (field.isCleanPoint(pt)) {
             events.add(Event.TIME_WASTED);
         }
 
-        if (field.isDust(destination)) {
-            field.removeDust(destination);
+        if (field.isDust(pt)) {
+            field.removeDust(pt);
             events.add(Event.DUST_CLEANED);
         }
 
-        Point next = direction.change(destination);
+        Point next = direction.change(pt);
         if (field.isBarrier(next)) {
             direction = null;
         }
@@ -148,5 +144,13 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         return Elements.VACUUM;
+    }
+
+    public boolean levelPassed() {
+        return levelPassed;
+    }
+
+    public boolean reset() {
+        return reset;
     }
 }

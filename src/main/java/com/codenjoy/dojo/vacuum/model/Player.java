@@ -25,14 +25,11 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
-import com.codenjoy.dojo.vacuum.services.Event;
 import com.codenjoy.dojo.vacuum.services.GameSettings;
 
 public class Player extends GamePlayer<Hero, Field> {
 
     Hero hero;
-    private boolean levelPassed = false;
-    private boolean restartRequested = false;
 
     public Player(EventListener listener, GameSettings settings) {
         super(listener, settings);
@@ -44,32 +41,22 @@ public class Player extends GamePlayer<Hero, Field> {
 
     @Override
     public void newHero(Field field) {
-        levelPassed = false;
-        restartRequested = false;
         hero = new Hero(field.getStart());
         hero.init(field);
     }
 
     @Override
     public boolean isAlive() {
-        return !levelPassed && !restartRequested;
+        return !hero.levelPassed() && !hero.reset();
     }
 
     @Override
     public boolean isWin() {
-        return levelPassed;
+        return hero.levelPassed();
     }
 
     @Override
     public void event(Object event) {
         super.event(event);
-        switch ((Event) event) {
-            case ALL_CLEAR:
-                levelPassed = true;
-                break;
-            case RESTART:
-                restartRequested = true;
-                break;
-        }
     }
 }

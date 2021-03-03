@@ -44,10 +44,6 @@ public class ScoresTest {
         scores.event(Event.DUST_CLEANED);
     }
 
-    public void restart() {
-        scores.event(Event.RESTART);
-    }
-
     public void timeWasted() {
         scores.event(Event.TIME_WASTED);
     }
@@ -74,8 +70,6 @@ public class ScoresTest {
 
         allClear();
         allClear();
-
-        restart();
 
         assertEquals(140
                 + 4 * settings.integer(CLEANING_ONE_CELL_REWARD)

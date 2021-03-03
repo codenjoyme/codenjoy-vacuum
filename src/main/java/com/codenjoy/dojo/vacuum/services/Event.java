@@ -25,6 +25,5 @@ package com.codenjoy.dojo.vacuum.services;
 public enum Event {
     ALL_CLEAR,
     DUST_CLEANED,
-    TIME_WASTED,
-    RESTART;
+    TIME_WASTED;
 }
