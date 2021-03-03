@@ -105,13 +105,15 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
             return;
         }
 
-        field.roundabout(to)
-                .ifPresent(r -> direction = r.enterFrom(this));
+        direction = field.roundabout(to)
+                .map(it -> it.enterFrom(this))
+                .orElse(direction);
 
         move(to);
 
-        field.switcher(to)
-                .ifPresent(s -> direction = s.direction());
+        direction = field.switcher(to)
+                .map(it -> it.direction())
+                .orElse(direction);
 
         if (field.isCleanPoint(to)) {
             player.event(Event.TIME_WASTED);
