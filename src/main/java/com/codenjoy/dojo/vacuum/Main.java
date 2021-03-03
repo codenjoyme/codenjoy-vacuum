@@ -27,7 +27,7 @@ import com.codenjoy.dojo.client.local.LocalGameRunner;
 import com.codenjoy.dojo.vacuum.client.Board;
 import com.codenjoy.dojo.vacuum.services.GameRunner;
 
-public class VacuumCleanerGame {
+public class Main {
 
     public static void main(String[] args) {
         LocalGameRunner.run(new GameRunner(),
