@@ -99,37 +99,30 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
         }
     }
 
-    public void tryMove(Point pt) {
-        boolean isNotEntryLimited = field.limiter(pt)
-                .map(limiter -> limiter.canEnterFrom(this))
-                .orElse(true);
-
-        Optional<Roundabout> roundabout = field.roundabout(pt);
-
-        isNotEntryLimited &= roundabout.map(r -> r.canEnterFrom(this))
-                .orElse(true);
-
-        if (field.isBarrier(pt) || !isNotEntryLimited) {
+    public void tryMove(Point to) {
+        if (field.isBarrier(to) || !field.canMove(this, to)) {
             direction = null;
             return;
         }
 
-        roundabout.ifPresent(r -> direction = r.enterFrom(this));
-        move(pt);
+        field.roundabout(to)
+                .ifPresent(r -> direction = r.enterFrom(this));
 
-        field.switcher(pt)
+        move(to);
+
+        field.switcher(to)
                 .ifPresent(s -> direction = s.direction());
 
-        if (field.isCleanPoint(pt)) {
+        if (field.isCleanPoint(to)) {
             player.event(Event.TIME_WASTED);
         }
 
-        if (field.isDust(pt)) {
-            field.removeDust(pt);
+        if (field.isDust(to)) {
+            field.removeDust(to);
             player.event(Event.DUST_CLEANED);
         }
 
-        Point next = direction.change(pt);
+        Point next = direction.change(to);
         if (field.isBarrier(next)) {
             direction = null;
         }

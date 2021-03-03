@@ -35,7 +35,7 @@ import static com.codenjoy.dojo.services.Direction.*;
 import static com.codenjoy.dojo.vacuum.model.Elements.*;
 import static java.util.stream.Collectors.toList;
 
-public class Roundabout extends AbstractItem {
+public class Roundabout extends AbstractItem implements Passable {
 
     public static final int MAX_DIRECTIONS = 2;
 
@@ -57,6 +57,7 @@ public class Roundabout extends AbstractItem {
         }
     }
 
+    @Override
     public boolean canEnterFrom(Point pt) {
         return EntryLimiter.checkEnter(permitted, pt, this);
     }

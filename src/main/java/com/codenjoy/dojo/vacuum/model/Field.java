@@ -49,5 +49,7 @@ public interface Field extends GameField<Player> {
 
     Optional<EntryLimiter> limiter(Point pt);
 
-    Optional<Roundabout> roundabout(Point destination);
+    Optional<Roundabout> roundabout(Point pt);
+
+    boolean canMove(Point from, Point to);
 }

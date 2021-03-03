@@ -138,6 +138,15 @@ public class VacuumGame implements Field {
         return found(roundabouts, pt);
     }
 
+    @Override
+    public boolean canMove(Point from, Point to) {
+        return limiter(to)
+                .map(it -> it.canEnterFrom(from))
+                .orElse(roundabout(to)
+                        .map(it -> it.canEnterFrom(from))
+                        .orElse(true));
+    }
+
     public List<Hero> getHeroes() {
         return players.stream()
                 .map(Player::getHero)
