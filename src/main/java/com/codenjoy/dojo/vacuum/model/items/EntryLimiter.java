@@ -34,7 +34,7 @@ import java.util.Map;
 import static com.codenjoy.dojo.services.Direction.*;
 import static com.codenjoy.dojo.vacuum.model.Elements.*;
 
-public class EntryLimiter extends AbstractItem implements Passable {
+public class EntryLimiter extends AbstractItem {
 
     private static final Map<Elements, List<Direction>> elements =
             new HashMap<>(){{
@@ -53,7 +53,6 @@ public class EntryLimiter extends AbstractItem implements Passable {
         permitted = elements.get(element);
     }
 
-    @Override
     public boolean canEnterFrom(Point from) {
         return checkEnter(permitted, from, this);
     }

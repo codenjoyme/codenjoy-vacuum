@@ -27,10 +27,7 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.State;
 import com.codenjoy.dojo.services.multiplayer.PlayerHero;
-import com.codenjoy.dojo.vacuum.model.items.Roundabout;
 import com.codenjoy.dojo.vacuum.services.Event;
-
-import java.util.Optional;
 
 public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
 

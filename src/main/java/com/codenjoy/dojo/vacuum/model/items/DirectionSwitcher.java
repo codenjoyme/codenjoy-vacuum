@@ -42,7 +42,7 @@ public class DirectionSwitcher extends AbstractItem {
                 put(SWITCH_DOWN, DOWN);
             }};
 
-    private final Direction direction;
+    private Direction direction;
 
     public DirectionSwitcher(Point pt, Elements element) {
         super(pt, element);
