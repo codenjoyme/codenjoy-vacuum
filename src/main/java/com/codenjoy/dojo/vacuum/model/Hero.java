@@ -41,8 +41,8 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     private boolean win = false;
     private Player player;
 
-    public Hero(Point xy) {
-        super(xy);
+    public Hero(Point pt) {
+        super(pt);
     }
 
     public void init(Player player) {
