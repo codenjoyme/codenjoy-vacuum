@@ -78,7 +78,8 @@ public class GameBoard {
     }
 
     public boolean isBarrier(int x, int y) {
-        return barriers.stream().anyMatch(b -> b.getX() == x && b.getY() == y);
+        return barriers.stream()
+                .anyMatch(b -> b.getX() == x && b.getY() == y);
     }
 
     public boolean isAllClear() {
@@ -105,7 +106,8 @@ public class GameBoard {
     }
 
     public boolean isDust(Point point) {
-        return dust.stream().anyMatch(d -> d.equals(point));
+        return dust.stream()
+                .anyMatch(d -> d.equals(point));
     }
 
     public void removeDust(Point point) {

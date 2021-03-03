@@ -64,8 +64,12 @@ public class Level {
         return new GameBoard(
                 size,
                 new Start(start),
-                barriers.stream().map(Barrier::new).collect(Collectors.toList()),
-                dust.stream().map(Dust::new).collect(Collectors.toList()),
+                barriers.stream()
+                        .map(Barrier::new)
+                        .collect(Collectors.toList()),
+                dust.stream()
+                        .map(Dust::new)
+                        .collect(Collectors.toList()),
                 new ArrayList<>(switchers),
                 new ArrayList<>(limiters),
                 new ArrayList<>(roundabouts)

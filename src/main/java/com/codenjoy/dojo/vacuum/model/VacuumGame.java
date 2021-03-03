@@ -110,7 +110,8 @@ public class VacuumGame implements Field {
 
     @Override
     public Optional<RoundaboutItem> getRoundabout(Point destination) {
-        return board.getRoundabouts().stream().filter(r -> r.equals(destination)).findFirst();
+        return board.getRoundabouts().stream()
+                .filter(r -> r.equals(destination)).findFirst();
     }
 
     public List<Hero> getHeroes() {
