@@ -27,34 +27,33 @@ import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.Elements;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static com.codenjoy.dojo.services.Direction.*;
+import static com.codenjoy.dojo.vacuum.model.Elements.*;
 import static java.util.stream.Collectors.toList;
 
 public class Roundabout extends AbstractItem {
 
     public static final int MAX_DIRECTIONS = 2;
 
+    private static final Map<Elements, List<Direction>> elements =
+            new HashMap<>(){{
+                put(ROUNDABOUT_LEFT_UP, Arrays.asList(LEFT, UP));
+                put(ROUNDABOUT_UP_RIGHT, Arrays.asList(UP, RIGHT));
+                put(ROUNDABOUT_RIGHT_DOWN, Arrays.asList(RIGHT, DOWN));
+                put(ROUNDABOUT_DOWN_LEFT, Arrays.asList(DOWN, LEFT));
+            }};
+
     private List<Direction> permitted;
 
     public Roundabout(Point pt, Elements element) {
         super(pt, element);
-
-        switch (element) {
-            case ROUNDABOUT_LEFT_UP:
-                permitted = Arrays.asList(Direction.LEFT, Direction.UP);
-                break;
-            case ROUNDABOUT_UP_RIGHT:
-                permitted = Arrays.asList(Direction.UP, Direction.RIGHT);
-                break;
-            case ROUNDABOUT_RIGHT_DOWN:
-                permitted = Arrays.asList(Direction.RIGHT, Direction.DOWN);
-                break;
-            case ROUNDABOUT_DOWN_LEFT:
-                permitted = Arrays.asList(Direction.DOWN, Direction.LEFT);
-                break;
-            default:
-                throw new IllegalArgumentException("Element " + element + " is not supported");
+        permitted = elements.get(element);
+        if (permitted == null) {
+            throw new IllegalArgumentException("Element " + element + " is not supported");
         }
     }
 
@@ -100,22 +99,15 @@ public class Roundabout extends AbstractItem {
 
     private static Elements parse(List<Direction> directions) {
         if (directions.size() != MAX_DIRECTIONS) {
-            throw new IllegalArgumentException("Roundabout should treat exactly 2 directions but " + directions.size() + " received");
+            throw new IllegalArgumentException("Roundabout should treat exactly 2 " +
+                    "directions but " + directions.size() + " received");
         }
 
-        if (directions.contains(Direction.LEFT) && directions.contains(Direction.UP)) {
-            return Elements.ROUNDABOUT_LEFT_UP;
-        }
-        if (directions.contains(Direction.UP) && directions.contains(Direction.RIGHT)) {
-            return Elements.ROUNDABOUT_UP_RIGHT;
-        }
-        if (directions.contains(Direction.RIGHT) && directions.contains(Direction.DOWN)) {
-            return Elements.ROUNDABOUT_RIGHT_DOWN;
-        }
-        if (directions.contains(Direction.DOWN) && directions.contains(Direction.LEFT)) {
-            return Elements.ROUNDABOUT_DOWN_LEFT;
-        }
-
-        throw new IllegalArgumentException("Roundabout with direction [" + directions.get(0) + ", " + directions.get(1) + "] is not supported");
+        return elements.entrySet().stream()
+                .filter(entry -> entry.getValue().containsAll(directions))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Roundabout with direction ["
+                        + directions.get(0) + ", " + directions.get(1) + "] is not supported"));
     }
 }
