@@ -25,9 +25,9 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.multiplayer.GameField;
-import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcherItem;
-import com.codenjoy.dojo.vacuum.model.items.EntryLimiterItem;
-import com.codenjoy.dojo.vacuum.model.items.RoundaboutItem;
+import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcher;
+import com.codenjoy.dojo.vacuum.model.items.EntryLimiter;
+import com.codenjoy.dojo.vacuum.model.items.Roundabout;
 
 import java.util.Optional;
 
@@ -45,9 +45,9 @@ public interface Field extends GameField<Player> {
 
     boolean isCleanPoint(Point pt);
 
-    Optional<DirectionSwitcherItem> switcher(Point pt);
+    Optional<DirectionSwitcher> switcher(Point pt);
 
-    Optional<EntryLimiterItem> limiter(Point pt);
+    Optional<EntryLimiter> limiter(Point pt);
 
-    Optional<RoundaboutItem> roundabout(Point destination);
+    Optional<Roundabout> roundabout(Point destination);
 }

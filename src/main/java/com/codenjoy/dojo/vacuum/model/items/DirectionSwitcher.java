@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.vacuum.model;
+package com.codenjoy.dojo.vacuum.model.items;
 
 /*-
  * #%L
@@ -24,19 +24,29 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.services.PointImpl;
+import com.codenjoy.dojo.vacuum.model.Elements;
 
-public class DirectionSwitcher extends PointImpl {
+import java.util.HashMap;
+import java.util.Map;
 
-    private Direction direction;
+import static com.codenjoy.dojo.services.Direction.*;
+import static com.codenjoy.dojo.vacuum.model.Elements.*;
 
-    public DirectionSwitcher(Point pt, Direction direction) {
-        super(pt);
-        this.direction = direction;
-    }
+public class DirectionSwitcher extends AbstractItem {
 
-    public void direction(Direction direction) {
-        this.direction = direction;
+    private static final Map<Elements, Direction> elements =
+            new HashMap<>(){{
+                put(SWITCH_LEFT, LEFT);
+                put(SWITCH_UP, UP);
+                put(SWITCH_RIGHT, RIGHT);
+                put(SWITCH_DOWN, DOWN);
+            }};
+
+    private final Direction direction;
+
+    public DirectionSwitcher(Point pt, Elements element) {
+        super(pt, element);
+        direction = elements.get(element);
     }
 
     public Direction direction() {

@@ -44,18 +44,18 @@ public class Level {
         return (int) Math.sqrt(map.length());
     }
 
-    public List<RoundaboutItem> roundabouts() {
+    public List<Roundabout> roundabouts() {
         return getObjects(xy, map,
-                RoundaboutItem::new,
+                Roundabout::new,
                 ROUNDABOUT_LEFT_UP,
                 ROUNDABOUT_UP_RIGHT,
                 ROUNDABOUT_RIGHT_DOWN,
                 ROUNDABOUT_DOWN_LEFT);
     }
 
-    public List<EntryLimiterItem> limiters() {
+    public List<EntryLimiter> limiters() {
         return getObjects(xy, map,
-                EntryLimiterItem::new,
+                EntryLimiter::new,
                 LIMITER_LEFT,
                 LIMITER_UP,
                 LIMITER_RIGHT,
@@ -64,9 +64,9 @@ public class Level {
                 LIMITER_VERTICAL);
     }
 
-    public List<DirectionSwitcherItem> switchers() {
+    public List<DirectionSwitcher> switchers() {
         return getObjects(xy, map,
-                DirectionSwitcherItem::new,
+                DirectionSwitcher::new,
                 SWITCH_LEFT,
                 SWITCH_UP,
                 SWITCH_RIGHT,

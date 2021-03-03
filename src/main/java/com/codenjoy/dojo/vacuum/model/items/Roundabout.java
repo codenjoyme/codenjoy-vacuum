@@ -25,16 +25,60 @@ package com.codenjoy.dojo.vacuum.model.items;
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.vacuum.model.Elements;
-import com.codenjoy.dojo.vacuum.model.Roundabout;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class RoundaboutItem extends AbstractItem {
+import static java.util.stream.Collectors.toList;
 
-    private final Roundabout roundabout;
+public class Roundabout extends AbstractItem {
 
-    private static Elements element(List<Direction> directions) {
-        if (directions.size() != 2) {
+    public static final int MAX_DIRECTIONS = 2;
+
+    private List<Direction> permitted;
+
+    public boolean canEnterFrom(Point from) {
+        return EntryLimiter.checkEnter(permitted, from, this);
+    }
+
+    public Direction enterFrom(Point pt) {
+        if (permitted.size() > MAX_DIRECTIONS) {
+            throw new IllegalStateException("Roundabout can treat exactly 2 directions");
+        }
+        Direction result = direction(pt);
+        permitted = rotate();
+        element = parse(permitted);
+        return result;
+    }
+
+    public Direction direction(Point pt) {
+        if (from().change(this).equals(pt)) {
+            return to();
+        }
+
+        if (to().change(this).equals(pt)) {
+            return from();
+        }
+
+        throw new IllegalArgumentException("Entry from point " + pt + " is prohibited");
+    }
+
+    public Direction to() {
+        return permitted.get(1);
+    }
+
+    public Direction from() {
+        return permitted.get(0);
+    }
+
+    private List<Direction> rotate() {
+        return permitted.stream()
+                .map(Direction::clockwise)
+                .collect(toList());
+    }
+
+    private static Elements parse(List<Direction> directions) {
+        if (directions.size() != MAX_DIRECTIONS) {
             throw new IllegalArgumentException("Roundabout should treat exactly 2 directions but " + directions.size() + " received");
         }
 
@@ -54,33 +98,24 @@ public class RoundaboutItem extends AbstractItem {
         throw new IllegalArgumentException("Roundabout with direction [" + directions.get(0) + ", " + directions.get(1) + "] is not supported");
     }
 
-    public RoundaboutItem(Point pt, Elements element) {
+    public Roundabout(Point pt, Elements element) {
         super(pt, element);
+
         switch (element) {
             case ROUNDABOUT_LEFT_UP:
-                roundabout = new Roundabout(pt, Direction.LEFT, Direction.UP);
+                permitted = Arrays.asList(Direction.LEFT, Direction.UP);
                 break;
             case ROUNDABOUT_UP_RIGHT:
-                roundabout = new Roundabout(pt, Direction.UP, Direction.RIGHT);
+                permitted = Arrays.asList(Direction.UP, Direction.RIGHT);
                 break;
             case ROUNDABOUT_RIGHT_DOWN:
-                roundabout = new Roundabout(pt, Direction.RIGHT, Direction.DOWN);
+                permitted = Arrays.asList(Direction.RIGHT, Direction.DOWN);
                 break;
             case ROUNDABOUT_DOWN_LEFT:
-                roundabout = new Roundabout(pt, Direction.DOWN, Direction.LEFT);
+                permitted = Arrays.asList(Direction.DOWN, Direction.LEFT);
                 break;
             default:
                 throw new IllegalArgumentException("Element " + element + " is not supported");
         }
-    }
-
-    public boolean canEnterFrom(Point pt) {
-        return roundabout.canEnterFrom(pt);
-    }
-
-    public Direction enterFrom(Point pt) {
-        Direction exit = roundabout.enterFrom(pt);
-        this.element(element(roundabout.directions()));
-        return exit;
     }
 }

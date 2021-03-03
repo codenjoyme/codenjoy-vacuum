@@ -27,7 +27,7 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.State;
 import com.codenjoy.dojo.services.multiplayer.PlayerHero;
-import com.codenjoy.dojo.vacuum.model.items.RoundaboutItem;
+import com.codenjoy.dojo.vacuum.model.items.Roundabout;
 import com.codenjoy.dojo.vacuum.services.Event;
 
 import java.util.ArrayList;
@@ -109,7 +109,7 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
                 .map(l -> l.canEnterFrom(this))
                 .orElse(true);
 
-        Optional<RoundaboutItem> roundabout = field.roundabout(destination);
+        Optional<Roundabout> roundabout = field.roundabout(destination);
 
         isNotEntryLimited &= roundabout.map(r -> r.canEnterFrom(this))
                 .orElse(true);

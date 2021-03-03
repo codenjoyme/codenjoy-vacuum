@@ -43,9 +43,9 @@ public class VacuumGame implements Field {
     private Start start;
     private List<Barrier> barriers;
     private List<Dust> dust;
-    private List<DirectionSwitcherItem> switchers;
-    private List<EntryLimiterItem> limiters;
-    private List<RoundaboutItem> roundabouts;
+    private List<DirectionSwitcher> switchers;
+    private List<EntryLimiter> limiters;
+    private List<Roundabout> roundabouts;
 
     private GameSettings settings;
 
@@ -87,7 +87,7 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<DirectionSwitcherItem> switcher(Point pt) {
+    public Optional<DirectionSwitcher> switcher(Point pt) {
         return found(switchers, pt);
     }
 
@@ -123,7 +123,7 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<EntryLimiterItem> limiter(Point pt) {
+    public Optional<EntryLimiter> limiter(Point pt) {
         return found(limiters, pt);
     }
 
@@ -137,7 +137,7 @@ public class VacuumGame implements Field {
     }
 
     @Override
-    public Optional<RoundaboutItem> roundabout(Point pt) {
+    public Optional<Roundabout> roundabout(Point pt) {
         return found(roundabouts, pt);
     }
 

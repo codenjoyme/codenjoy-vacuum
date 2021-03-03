@@ -24,33 +24,42 @@ package com.codenjoy.dojo.vacuum.model.items;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.model.DirectionSwitcher;
 import com.codenjoy.dojo.vacuum.model.Elements;
+import com.google.common.collect.Lists;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.codenjoy.dojo.services.Direction.*;
 import static com.codenjoy.dojo.vacuum.model.Elements.*;
 
-public class DirectionSwitcherItem extends AbstractItem {
+public class EntryLimiter extends AbstractItem {
 
-    private static final Map<Elements, Direction> elements =
+    private static final Map<Elements, List<Direction>> elements =
             new HashMap<>(){{
-                put(SWITCH_LEFT, LEFT);
-                put(SWITCH_UP, UP);
-                put(SWITCH_RIGHT, RIGHT);
-                put(SWITCH_DOWN, DOWN);
+                put(LIMITER_LEFT, Lists.newArrayList(LEFT));
+                put(LIMITER_UP, Lists.newArrayList(UP));
+                put(LIMITER_RIGHT, Lists.newArrayList(RIGHT));
+                put(LIMITER_DOWN, Lists.newArrayList(DOWN));
+                put(LIMITER_HORIZONTAL, Lists.newArrayList(LEFT, RIGHT));
+                put(LIMITER_VERTICAL, Lists.newArrayList(UP, DOWN));
             }};
 
-    private final DirectionSwitcher switcher;
+    private List<Direction> permitted;
 
-    public DirectionSwitcherItem(Point pt, Elements element) {
+    public EntryLimiter(Point pt, Elements element) {
         super(pt, element);
-        this.switcher = new DirectionSwitcher(pt, elements.get(element));
+        permitted = elements.get(element);
     }
 
-    public Direction direction() {
-        return switcher.direction();
+    public boolean canEnterFrom(Point from) {
+        return checkEnter(permitted, from, this);
+    }
+
+    public static boolean checkEnter(List<Direction> permitted, Point from, Point to) {
+        return permitted.stream()
+                .map(direction -> direction.change(to))
+                .anyMatch(pt -> pt.equals(from));
     }
 }
