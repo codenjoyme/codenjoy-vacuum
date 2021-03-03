@@ -25,10 +25,7 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.printer.BoardReader;
-import com.codenjoy.dojo.services.settings.SettingsReader;
-import com.codenjoy.dojo.vacuum.model.items.EntryLimiterItem;
-import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcherItem;
-import com.codenjoy.dojo.vacuum.model.items.RoundaboutItem;
+import com.codenjoy.dojo.vacuum.model.items.*;
 import com.codenjoy.dojo.vacuum.model.level.Level;
 import com.codenjoy.dojo.vacuum.services.GameSettings;
 
@@ -41,14 +38,31 @@ import static java.util.stream.Collectors.toList;
 public class VacuumGame implements Field {
 
     private final List<Player> players = new LinkedList<>();
-    private Level level;
-    private GameBoard board;
+    private final Level level;
+    private int size;
+    private Start start;
+    private List<Barrier> barriers;
+    private List<Dust> dust;
+    private List<DirectionSwitcherItem> switchers;
+    private List<EntryLimiterItem> limiters;
+    private List<RoundaboutItem> roundabouts;
+
     private GameSettings settings;
 
     public VacuumGame(Level level, GameSettings settings) {
-        this.level = level;
-        this.board = level.newBoard();
         this.settings = settings;
+        this.level = level;
+        reset();
+    }
+
+    public void reset() {
+        size = level.size();
+        start = level.start();
+        barriers = level.barriers();
+        dust = level.dust();
+        switchers = level.switchers();
+        limiters = level.limiters();
+        roundabouts = level.roundabouts();
     }
 
     @Override
@@ -60,55 +74,78 @@ public class VacuumGame implements Field {
         });
     }
 
-    @Override
-    public boolean isBarrier(Point destination) {
-        int x = destination.getX();
-        int y = destination.getY();
-        return board.isInBounds(x, y) && board.isBarrier(x, y);
+    public boolean isInBounds(int x, int y) {
+        return x >= 0 && x < size && y >= 0 && y < size;
     }
 
-    @Override
-    public Point getStart() {
-        return board.getStart();
+    public boolean isBarrier(int x, int y) {
+        return barriers.stream()
+                .anyMatch(b -> b.getX() == x && b.getY() == y);
     }
 
     @Override
     public boolean isAllClear() {
-        return board.isAllClear();
-    }
-
-    public int getSize() {
-        return board.getSize();
+        return dust.isEmpty();
     }
 
     @Override
     public Optional<DirectionSwitcherItem> getDirectionSwitcher(Point point) {
-        return board.getDirectionSwitcher(point);
+        return switchers.stream()
+                .filter(s -> s.getX() == point.getX() && s.getY() == point.getY())
+                .findFirst();
     }
 
     @Override
     public boolean isCleanPoint(Point point) {
-        return board.isCleanPoint(point);
+        return !start.equals(point)
+                && !barriers.contains(point)
+                && !dust.contains(point)
+                && !switchers.contains(point)
+                && !limiters.contains(point)
+                && !roundabouts.contains(point);
     }
 
     @Override
     public boolean isDust(Point point) {
-        return board.isDust(point);
+        return dust.stream()
+                .anyMatch(d -> d.equals(point));
     }
 
     @Override
     public void removeDust(Point point) {
-        board.removeDust(point);
+        Dust dustCell = dust.stream()
+                .filter(d -> d.equals(point))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("There is no dust at point: " + point));
+        dust.remove(dustCell);
     }
 
     @Override
     public Optional<EntryLimiterItem> getDirectionLimiter(Point point) {
-        return board.getDirectionLimiter(point);
+        return limiters.stream()
+                .filter(l -> l.equals(point))
+                .findFirst();
+    }
+
+    @Override
+    public Point getStart() {
+        return start;
+    }
+
+    @Override
+    public boolean isBarrier(Point destination) {
+        int x = destination.getX();
+        int y = destination.getY();
+        return isInBounds(x, y) && isBarrier(x, y);
+    }
+
+    public int getSize() {
+        return size;
     }
 
     @Override
     public Optional<RoundaboutItem> getRoundabout(Point destination) {
-        return board.getRoundabouts().stream()
+        return roundabouts.stream()
                 .filter(r -> r.equals(destination)).findFirst();
     }
 
@@ -123,7 +160,7 @@ public class VacuumGame implements Field {
         if (!players.contains(player)) {
             players.add(player);
         }
-        board = level.newBoard();
+        reset();
         player.newHero(this);
     }
 
@@ -138,19 +175,19 @@ public class VacuumGame implements Field {
 
             @Override
             public int size() {
-                return board.getSize();
+                return VacuumGame.this.getSize();
             }
 
             @Override
             public Iterable<? extends Point> elements() {
                 return new LinkedList<>() {{
                     addAll(getHeroes());
-                    addAll(board.getBarriers());
-                    addAll(board.getDust());
-                    addAll(board.getDirectionSwitchers());
-                    addAll(board.getDirectionLimiters());
-                    addAll(board.getRoundabouts());
-                    add(board.getStart());
+                    addAll(VacuumGame.this.barriers);
+                    addAll(VacuumGame.this.dust);
+                    addAll(VacuumGame.this.switchers);
+                    addAll(VacuumGame.this.limiters);
+                    addAll(VacuumGame.this.roundabouts);
+                    add(VacuumGame.this.start);
                 }};
             }
         };

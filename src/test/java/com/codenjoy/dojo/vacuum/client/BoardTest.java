@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.codenjoy.dojo.services.PointImpl.pt;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
 

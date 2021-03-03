@@ -28,6 +28,7 @@ import com.codenjoy.dojo.services.printer.PrinterFactory;
 import com.codenjoy.dojo.services.printer.PrinterFactoryImpl;
 import com.codenjoy.dojo.utils.TestUtils;
 import com.codenjoy.dojo.vacuum.model.level.Level;
+import com.codenjoy.dojo.vacuum.model.level.Levels;
 import com.codenjoy.dojo.vacuum.services.Event;
 import com.codenjoy.dojo.vacuum.services.GameSettings;
 import org.junit.Before;
@@ -52,7 +53,7 @@ public abstract class AbstractGameTest {
     }
 
     protected void givenFl(String board) {
-        Level level = Level.generate(board);
+        Level level = Levels.generate(board);
         game = new VacuumGame(level, settings);
 
         listener = mock(EventListener.class);

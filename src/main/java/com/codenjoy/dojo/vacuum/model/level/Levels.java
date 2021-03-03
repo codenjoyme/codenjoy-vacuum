@@ -30,7 +30,7 @@ public class Levels {
     private static final List<Level> levels = new ArrayList<>();
 
     // TODO сделать левелы изменяемыми на админке и убрать этот хардкод
-    public static int SIZE = level1().newBoard().getSize();
+    public static int SIZE = level1().size();
 
     static {
         levels.add(level1());
@@ -54,8 +54,7 @@ public class Levels {
     }
 
     private static Level level1() {
-        return Level.generate(
-                        "##########" +
+        return generate("##########" +
                         "#*S#***#*#" +
                         "#*##*#*#*#" +
                         "#****#*#*#" +
@@ -68,13 +67,16 @@ public class Levels {
         );
     }
 
+    public static Level generate(String map) {
+        return new Level(map);
+    }
+
 //    SWITCH_LEFT('←'),
 //    SWITCH_RIGHT('→'),
 //    SWITCH_UP('↑'),
 //    SWITCH_DOWN('↓')
     private static Level level2() {
-        return Level.generate(
-                        "##########" +
+        return generate("##########" +
                         "#***S←**##" +
                         "#*####**##" +
                         "#*#↓****←#" +
@@ -94,8 +96,7 @@ public class Levels {
 //    LIMITER_VERTICAL('║'),
 //    LIMITER_HORIZONTAL('═')
     private static Level level3() {
-        return Level.generate(
-                        "##########" +
+        return generate("##########" +
                         "#****┌***#" +
                         "####**╡╥*#" +
                         "#S*╡══**╡#" +
@@ -113,8 +114,7 @@ public class Levels {
 //    ROUNDABOUT_RIGHT_DOWN('┌'),
 //    ROUNDABOUT_DOWN_LEFT('┐')
     private static Level level4() {
-        return Level.generate(
-                        "##########" +
+        return generate("##########" +
                         "#*#####**#" +
                         "#***##*┐##" +
                         "#*#*###**#" +

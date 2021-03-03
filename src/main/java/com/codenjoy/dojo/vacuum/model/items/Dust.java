@@ -27,10 +27,6 @@ import com.codenjoy.dojo.vacuum.model.Elements;
 
 public class Dust extends AbstractItem {
 
-    public Dust(int x, int y) {
-        super(Elements.DUST, x, y);
-    }
-
     public Dust(Point point) {
         super(point, Elements.DUST);
     }

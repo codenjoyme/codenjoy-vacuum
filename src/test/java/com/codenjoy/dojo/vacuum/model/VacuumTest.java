@@ -164,6 +164,28 @@ public class VacuumTest extends AbstractGameTest {
     }
 
     @Test
+    public void shouldResetBoard_whenNewGame() {
+        // given
+        shouldCleanDust();
+
+        assertE("#####" +
+                "# S #" +
+                "#* *#" +
+                "#*O*#" +
+                "#####");
+
+        // when
+        game.newGame(player);
+
+        // then
+        assertE("#####" +
+                "# O #" +
+                "#***#" +
+                "#***#" +
+                "#####");
+    }
+
+    @Test
     public void shouldBeenFined_whenWastingTime() {
         // given
         givenFl("#####" +

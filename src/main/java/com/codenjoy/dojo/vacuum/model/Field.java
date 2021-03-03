@@ -25,8 +25,8 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.multiplayer.GameField;
-import com.codenjoy.dojo.vacuum.model.items.EntryLimiterItem;
 import com.codenjoy.dojo.vacuum.model.items.DirectionSwitcherItem;
+import com.codenjoy.dojo.vacuum.model.items.EntryLimiterItem;
 import com.codenjoy.dojo.vacuum.model.items.RoundaboutItem;
 
 import java.util.Optional;

@@ -22,7 +22,6 @@ package com.codenjoy.dojo.vacuum.model;
  * #L%
  */
 
-import com.codenjoy.dojo.vacuum.services.Event;
 import org.junit.Test;
 
 import static com.codenjoy.dojo.vacuum.services.Event.TIME_WASTED;

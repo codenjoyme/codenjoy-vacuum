@@ -24,8 +24,8 @@ package com.codenjoy.dojo.vacuum.client;
 
 
 import com.codenjoy.dojo.client.AbstractBoard;
-import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.vacuum.model.Elements;
 
 import java.util.List;
 
