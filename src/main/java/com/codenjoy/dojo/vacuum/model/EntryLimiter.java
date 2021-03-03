@@ -24,13 +24,14 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.services.PointImpl;
 import com.google.common.collect.Sets;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.codenjoy.dojo.services.PointImpl.pt;
 
 public class EntryLimiter {
     private final int x;
@@ -60,7 +61,7 @@ public class EntryLimiter {
     }
 
     public Point getPosition() {
-        return new PointImpl(x, y);
+        return pt(x, y);
     }
 
     public void permitFrom(Direction direction) {
