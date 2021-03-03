@@ -24,25 +24,25 @@ package com.codenjoy.dojo.vacuum.model.items;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.vacuum.model.DirectionSwitcher;
-import com.codenjoy.dojo.vacuum.model.Element;
+import com.codenjoy.dojo.vacuum.model.Elements;
 
 public class DirectionSwitcherItem extends AbstractItem {
     private final DirectionSwitcher switcher;
 
     public static DirectionSwitcherItem create(Direction direction, int x, int y) {
-        Element element;
+        Elements element;
         switch (direction) {
             case LEFT:
-                element = Element.SWITCH_LEFT;
+                element = Elements.SWITCH_LEFT;
                 break;
             case RIGHT:
-                element = Element.SWITCH_RIGHT;
+                element = Elements.SWITCH_RIGHT;
                 break;
             case UP:
-                element = Element.SWITCH_UP;
+                element = Elements.SWITCH_UP;
                 break;
             case DOWN:
-                element = Element.SWITCH_DOWN;
+                element = Elements.SWITCH_DOWN;
                 break;
             default:
                 throw new IllegalArgumentException("Direction " + direction + " is not supported by direction switchers");
@@ -50,7 +50,7 @@ public class DirectionSwitcherItem extends AbstractItem {
         return new DirectionSwitcherItem(element, direction, x, y);
     }
 
-    private DirectionSwitcherItem(Element element, Direction direction, int x, int y) {
+    private DirectionSwitcherItem(Elements element, Direction direction, int x, int y) {
         super(element, x, y);
         this.switcher = new DirectionSwitcher(x, y, direction);
     }

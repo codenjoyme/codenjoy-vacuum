@@ -22,12 +22,12 @@ package com.codenjoy.dojo.vacuum.model.items;
  * #L%
  */
 
-import com.codenjoy.dojo.vacuum.model.Element;
+import com.codenjoy.dojo.vacuum.model.Elements;
 
 public class Start extends AbstractItem {
 
     public Start(int x, int y) {
-        super(Element.START, x, y);
+        super(Elements.START, x, y);
     }
 
     public Start(Start start) {

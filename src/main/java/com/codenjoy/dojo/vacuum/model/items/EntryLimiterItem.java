@@ -24,13 +24,13 @@ package com.codenjoy.dojo.vacuum.model.items;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.model.Element;
+import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.vacuum.model.EntryLimiter;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 
-import static com.codenjoy.dojo.vacuum.model.Element.*;
+import static com.codenjoy.dojo.vacuum.model.Elements.*;
 
 public class EntryLimiterItem extends AbstractItem {
     private final EntryLimiter limiter;
@@ -64,7 +64,7 @@ public class EntryLimiterItem extends AbstractItem {
         throw new IllegalArgumentException("A direction limiter can not have more than 2 permitted directions");
     }
 
-    private EntryLimiterItem(int x, int y, Element element, Direction... directions) {
+    private EntryLimiterItem(int x, int y, Elements element, Direction... directions) {
         super(element, x, y);
         this.limiter = new EntryLimiter(x, y, directions);
     }

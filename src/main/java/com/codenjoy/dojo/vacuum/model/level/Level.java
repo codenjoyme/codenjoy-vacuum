@@ -23,7 +23,7 @@ package com.codenjoy.dojo.vacuum.model.level;
  */
 
 import com.codenjoy.dojo.services.Direction;
-import com.codenjoy.dojo.vacuum.model.Element;
+import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.vacuum.model.GameBoard;
 import com.codenjoy.dojo.vacuum.model.items.*;
 
@@ -91,7 +91,7 @@ public class Level {
             char ch = map.charAt(i);
             int x = i % size;
             int y = size - 1 - i / size;
-            switch (Element.byCode(ch)) {
+            switch (Elements.byCode(ch)) {
                 case START:
                     if (start != null) {
                         throw new IllegalArgumentException("Only one start point should be declared");
@@ -149,16 +149,16 @@ public class Level {
                 case NONE:
                     break;
                 case VACUUM:
-                    throw new IllegalArgumentException("Map should not contain hero declaration, only start point '" + Element.START.ch() + "'");
+                    throw new IllegalArgumentException("Map should not contain hero declaration, only start point '" + Elements.START.ch() + "'");
                 default:
                     throw new IllegalArgumentException("Element with code: '" + ch + "' not supported");
             }
         }
         if (!isMapBorderedCorrectly(map)) {
-            throw new IllegalArgumentException("Map should be surrounded by barriers '" + Element.BARRIER.ch() + "'");
+            throw new IllegalArgumentException("Map should be surrounded by barriers '" + Elements.BARRIER.ch() + "'");
         }
         if (start == null) {
-            throw new IllegalArgumentException("Start point '" + Element.START.ch() + "' should be declared on map");
+            throw new IllegalArgumentException("Start point '" + Elements.START.ch() + "' should be declared on map");
         }
         if (!isMapPassable(map)) {
             throw new IllegalArgumentException("There is no way to pass this level");

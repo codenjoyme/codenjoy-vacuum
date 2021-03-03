@@ -24,7 +24,7 @@ package com.codenjoy.dojo.vacuum.model.items;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.model.Element;
+import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.vacuum.model.Roundabout;
 import com.google.common.collect.Sets;
 
@@ -36,32 +36,32 @@ public class RoundaboutItem extends AbstractItem {
 
     public static RoundaboutItem create(int x, int y, Direction... directions) {
         ArrayList<Direction> directionsList = new ArrayList<>(Sets.newHashSet(directions));
-        Element roundaboutType = elementByDirections(directionsList);
+        Elements roundaboutType = elementByDirections(directionsList);
         return new RoundaboutItem(roundaboutType, x, y);
     }
 
-    private static Element elementByDirections(List<Direction> directions) {
+    private static Elements elementByDirections(List<Direction> directions) {
         if (directions.size() != 2) {
             throw new IllegalArgumentException("Roundabout should treat exactly 2 directions but " + directions.size() + " received");
         }
 
         if (directions.contains(Direction.LEFT) && directions.contains(Direction.UP)) {
-            return Element.ROUNDABOUT_LEFT_UP;
+            return Elements.ROUNDABOUT_LEFT_UP;
         }
         if (directions.contains(Direction.UP) && directions.contains(Direction.RIGHT)) {
-            return Element.ROUNDABOUT_UP_RIGHT;
+            return Elements.ROUNDABOUT_UP_RIGHT;
         }
         if (directions.contains(Direction.RIGHT) && directions.contains(Direction.DOWN)) {
-            return Element.ROUNDABOUT_RIGHT_DOWN;
+            return Elements.ROUNDABOUT_RIGHT_DOWN;
         }
         if (directions.contains(Direction.DOWN) && directions.contains(Direction.LEFT)) {
-            return Element.ROUNDABOUT_DOWN_LEFT;
+            return Elements.ROUNDABOUT_DOWN_LEFT;
         }
 
         throw new IllegalArgumentException("Roundabout with direction [" + directions.get(0) + ", " + directions.get(1) + "] is not supported");
     }
 
-    private RoundaboutItem(Element element, int x, int y) {
+    private RoundaboutItem(Elements element, int x, int y) {
         super(element, x, y);
         switch (element) {
             case ROUNDABOUT_LEFT_UP:

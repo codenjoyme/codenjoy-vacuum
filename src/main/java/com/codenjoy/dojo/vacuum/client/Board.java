@@ -24,7 +24,7 @@ package com.codenjoy.dojo.vacuum.client;
 
 
 import com.codenjoy.dojo.client.AbstractBoard;
-import com.codenjoy.dojo.vacuum.model.Element;
+import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.services.Point;
 
 /**
@@ -32,19 +32,19 @@ import com.codenjoy.dojo.services.Point;
  * Содержит ряд унаследованных методов {@see AbstractBoard},
  * но ты можешь добавить сюда любые свои методы на их основе.
  */
-public class Board extends AbstractBoard<Element> {
+public class Board extends AbstractBoard<Elements> {
 
     @Override
-    public Element valueOf(char ch) {
-        return Element.byCode(ch);
+    public Elements valueOf(char ch) {
+        return Elements.byCode(ch);
     }
 
     public boolean isBarrierAt(int x, int y) {
-        return isAt(x, y, Element.BARRIER);
+        return isAt(x, y, Elements.BARRIER);
     }
 
     public Point getMe() {
-        return get(Element.VACUUM).get(0);
+        return get(Elements.VACUUM).get(0);
     }
 
 }

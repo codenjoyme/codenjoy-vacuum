@@ -29,7 +29,7 @@ import com.codenjoy.dojo.services.printer.CharElements;
  * Тут указана легенда всех возможных объектов на поле и их состояний.
  * Важно помнить, что для каждой енумной константы надо создать спрайт в папке \src\main\webapp\resources\sprite.
  */
-public enum Element implements CharElements {
+public enum Elements implements CharElements {
 
     NONE(' '),                          // Чистая клетка локации. Проезд облагается штрафом.
                                             // Эффективный пылесос должен меньше гулять по чистым местам и больше убираться.
@@ -69,7 +69,7 @@ public enum Element implements CharElements {
 
     final char ch;
 
-    Element(char ch) {
+    Elements(char ch) {
         this.ch = ch;
     }
 
@@ -83,8 +83,8 @@ public enum Element implements CharElements {
         return String.valueOf(ch);
     }
 
-    public static Element byCode(char ch) {
-        for (Element el : Element.values()) {
+    public static Elements byCode(char ch) {
+        for (Elements el : Elements.values()) {
             if (el.ch == ch) {
                 return el;
             }

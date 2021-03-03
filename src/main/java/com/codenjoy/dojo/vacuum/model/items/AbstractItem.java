@@ -24,13 +24,13 @@ package com.codenjoy.dojo.vacuum.model.items;
 
 import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
-import com.codenjoy.dojo.vacuum.model.Element;
+import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.vacuum.model.Player;
 
-public abstract class AbstractItem extends PointImpl implements State<Element, Player> {
-    private Element element;
+public abstract class AbstractItem extends PointImpl implements State<Elements, Player> {
+    private Elements element;
 
-    public AbstractItem(Element element, int x, int y) {
+    public AbstractItem(Elements element, int x, int y) {
         super(x, y);
         this.element = element;
     }
@@ -40,12 +40,12 @@ public abstract class AbstractItem extends PointImpl implements State<Element, P
         this.element = item.element;
     }
 
-    public void setElement(Element element) {
+    public void setElement(Elements element) {
         this.element = element;
     }
 
     @Override
-    public Element state(Player player, Object... objects) {
+    public Elements state(Player player, Object... objects) {
         return element;
     }
 }

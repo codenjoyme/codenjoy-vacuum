@@ -40,7 +40,7 @@ import java.util.Optional;
  * Ну и конечно же он имплементит {@see State}, а значит может быть отрисован на поле.
  * Часть этих интерфейсов объявлены в {@see PlayerHero}, а часть явно тут.
  */
-public class Hero extends PlayerHero<Field> implements State<Element, Player> {
+public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     private static final int RESTART_ACTION = 0;
 
     private Direction direction;
@@ -152,7 +152,7 @@ public class Hero extends PlayerHero<Field> implements State<Element, Player> {
     }
 
     @Override
-    public Element state(Player player, Object... alsoAtPoint) {
-        return Element.VACUUM;
+    public Elements state(Player player, Object... alsoAtPoint) {
+        return Elements.VACUUM;
     }
 }

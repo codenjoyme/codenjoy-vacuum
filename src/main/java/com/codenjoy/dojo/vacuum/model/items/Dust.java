@@ -22,12 +22,12 @@ package com.codenjoy.dojo.vacuum.model.items;
  * #L%
  */
 
-import com.codenjoy.dojo.vacuum.model.Element;
+import com.codenjoy.dojo.vacuum.model.Elements;
 
 public class Dust extends AbstractItem {
 
     public Dust(int x, int y) {
-        super(Element.DUST, x, y);
+        super(Elements.DUST, x, y);
     }
 
     public Dust(AbstractItem item) {
