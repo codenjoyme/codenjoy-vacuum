@@ -92,6 +92,4 @@ public class ScoresTest {
 
         assertEquals(Scores.MIN_SCORE, scores.getScore());
     }
-
-
 }

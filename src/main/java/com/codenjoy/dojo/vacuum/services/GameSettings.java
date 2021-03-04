@@ -31,7 +31,6 @@ public class GameSettings extends SettingsImpl implements SettingsReader<GameSet
 
     public enum Keys implements Key {
 
-        INITIAL_PLAYER_SCORE("Initial player score"),
         CLEANING_ONE_CELL_REWARD("Cleaning one cell reward"),
         WASTE_OF_TIME_PENALTY("Waste of time penalty");
 
@@ -48,8 +47,7 @@ public class GameSettings extends SettingsImpl implements SettingsReader<GameSet
     }
 
     public GameSettings() {
-        integer(INITIAL_PLAYER_SCORE, 0);
-        integer(CLEANING_ONE_CELL_REWARD, 100);
+        integer(CLEANING_ONE_CELL_REWARD, 1);
         integer(WASTE_OF_TIME_PENALTY, 1);
     }
 }
