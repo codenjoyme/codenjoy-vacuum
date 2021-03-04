@@ -161,7 +161,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 100\n" +
+                        "2:Scores: 1\n" +
                         "2:Answer: RIGHT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -204,7 +204,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 100\n" +
+                        "2:Scores: 1\n" +
                         "2:Answer: RIGHT, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -247,7 +247,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 100\n" +
+                        "2:Scores: 1\n" +
                         "2:Answer: LEFT, ACT\n" +
                         "1:Fire Event: TIME_WASTED\n" +
                         "2:Fire Event: TIME_WASTED\n" +
@@ -292,7 +292,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: RIGHT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -335,7 +335,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -378,7 +378,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -421,7 +421,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: DOWN, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -464,7 +464,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -507,7 +507,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: DOWN, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -550,7 +550,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -593,7 +593,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: RIGHT, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -636,7 +636,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP, ACT\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -679,7 +679,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP, ACT\n" +
                         "1:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------\n" +
@@ -723,7 +723,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP\n" +
                         "------------------------------------------\n" +
                         "1:##########\n" +
@@ -766,7 +766,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 99\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: LEFT\n" +
                         "2:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------\n" +
@@ -810,7 +810,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 98\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: DOWN\n" +
                         "1:Fire Event: TIME_WASTED\n" +
                         "2:Fire Event: DUST_CLEANED\n" +
@@ -855,7 +855,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 198\n" +
+                        "2:Scores: 1\n" +
                         "2:Answer: RIGHT\n" +
                         "2:Fire Event: DUST_CLEANED\n" +
                         "------------------------------------------\n" +
@@ -899,7 +899,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 298\n" +
+                        "2:Scores: 2\n" +
                         "2:Answer: UP\n" +
                         "2:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------\n" +
@@ -943,7 +943,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 297\n" +
+                        "2:Scores: 1\n" +
                         "2:Answer: RIGHT\n" +
                         "2:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------\n" +
@@ -987,7 +987,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 296\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: LEFT\n" +
                         "1:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------\n" +
@@ -1031,7 +1031,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 296\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: DOWN\n" +
                         "2:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------\n" +
@@ -1075,7 +1075,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 295\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP\n" +
                         "2:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------\n" +
@@ -1119,7 +1119,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 294\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP\n" +
                         "2:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------\n" +
@@ -1163,7 +1163,7 @@ public class SmokeTest {
                         "2:Roundabouts: []\n" +
                         "2:Limiters: []\n" +
                         "2:Switches: []\n" +
-                        "2:Scores: 293\n" +
+                        "2:Scores: 0\n" +
                         "2:Answer: UP\n" +
                         "2:Fire Event: TIME_WASTED\n" +
                         "------------------------------------------",
