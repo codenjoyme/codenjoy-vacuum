@@ -53,8 +53,8 @@ public class EntryLimiter extends AbstractItem {
         permitted = elements.get(element);
     }
 
-    public boolean canEnterFrom(Point from) {
-        return checkEnter(permitted, from, this);
+    public boolean canEnterFrom(Point pt) {
+        return checkEnter(permitted, pt, this);
     }
 
     public static boolean checkEnter(List<Direction> permitted, Point from, Point to) {
