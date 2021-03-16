@@ -86,11 +86,11 @@ public class Board extends AbstractBoard<Elements> {
     }
 
     public Point getMe() {
-        return get(Elements.VACUUM).get(0);
+        return get(VACUUM).get(0);
     }
 
     public Point getStartPoint() {
-        List<Point> points = get(Elements.START);
+        List<Point> points = get(START);
         if (!points.isEmpty()) {
             return points.get(0);
         }
