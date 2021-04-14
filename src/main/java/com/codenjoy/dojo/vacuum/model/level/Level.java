@@ -23,6 +23,7 @@ package com.codenjoy.dojo.vacuum.model.level;
  */
 
 import com.codenjoy.dojo.services.LengthToXY;
+import com.codenjoy.dojo.utils.LevelUtils;
 import com.codenjoy.dojo.vacuum.model.items.*;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class Level {
     private LengthToXY xy;
 
     public Level(String map) {
-        this.map = map;
+        this.map = LevelUtils.clear(map);
         xy = new LengthToXY(size());
     }
 
