@@ -24,31 +24,21 @@ package com.codenjoy.dojo.vacuum.model;
 
 
 import com.codenjoy.dojo.services.EventListener;
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
 import com.codenjoy.dojo.vacuum.services.GameSettings;
 
 public class Player extends GamePlayer<Hero, Field> {
 
-    Hero hero;
-
     public Player(EventListener listener, GameSettings settings) {
         super(listener, settings);
     }
 
-    public Hero getHero() {
-        return hero;
-    }
-
     @Override
-    public void newHero(Field field) {
-        hero = new Hero(field.getStart());
+    public Hero createHero(Point pt) {
+        Hero hero = new Hero(field.getStart());
         hero.init(this);
-        hero.init(field);
-    }
-
-    @Override
-    public boolean isAlive() {
-        return !hero.win() && !hero.reset();
+        return hero;
     }
 
     @Override
@@ -57,7 +47,7 @@ public class Player extends GamePlayer<Hero, Field> {
     }
 
     @Override
-    public void event(Object event) {
-        super.event(event);
+    public boolean isAlive() {
+        return !hero.win() && hero.isAlive();
     }
 }

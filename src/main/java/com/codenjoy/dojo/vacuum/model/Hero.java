@@ -34,7 +34,7 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     private static final int RESTART_ACTION = 0;
 
     private Direction direction;
-    private boolean reset = false;
+    private boolean alive = true;
     private boolean win = false;
     private Player player;
 
@@ -42,13 +42,13 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
         super(pt);
     }
 
-    public void init(Player player) {
-        this.player = player;
+    @Override
+    public boolean isAlive() {
+        return alive;
     }
 
-    @Override
-    public void init(Field field) {
-        this.field = field;
+    public void init(Player player) {
+        this.player = player;
     }
 
     public void tryChange(Direction input) {
@@ -80,7 +80,7 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     @Override
     public void act(int... p) {
         if (p.length > 0 && p[0] == RESTART_ACTION) {
-            reset = true;
+            alive = false;
         }
     }
 
@@ -134,9 +134,5 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
 
     public boolean win() {
         return win;
-    }
-
-    public boolean reset() {
-        return reset;
     }
 }
