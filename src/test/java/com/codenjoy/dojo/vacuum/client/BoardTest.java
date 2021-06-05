@@ -22,7 +22,6 @@ package com.codenjoy.dojo.vacuum.client;
  * #L%
  */
 
-import com.codenjoy.dojo.vacuum.model.Elements;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -79,16 +78,16 @@ public class BoardTest {
 
     @Test
     public void shouldWork_getAt() {
-        assertEquals(Elements.NONE, board.getAt(2, 3));
-        assertEquals(Elements.BARRIER, board.getAt(0, 8));
-        assertEquals(Elements.START, board.getAt(1, 8));
+        assertEquals(Element.NONE, board.getAt(2, 3));
+        assertEquals(Element.BARRIER, board.getAt(0, 8));
+        assertEquals(Element.START, board.getAt(1, 8));
     }
 
     @Test
     public void shouldWork_getAt_point() {
-        assertEquals(Elements.NONE, board.getAt(pt(7, 3)));
-        assertEquals(Elements.BARRIER, board.getAt(pt(0, 8)));
-        assertEquals(Elements.START, board.getAt(pt(1, 8)));
+        assertEquals(Element.NONE, board.getAt(pt(7, 3)));
+        assertEquals(Element.BARRIER, board.getAt(pt(0, 8)));
+        assertEquals(Element.START, board.getAt(pt(1, 8)));
     }
 
     @Test
@@ -107,15 +106,15 @@ public class BoardTest {
 
     @Test
     public void shouldWork_getAt_outOfBoard() {
-        assertEquals(Elements.BARRIER, board.getAt(-1, 1));
-        assertEquals(Elements.BARRIER, board.getAt(1, -1));
-        assertEquals(Elements.BARRIER, board.getAt(100, 1));
-        assertEquals(Elements.BARRIER, board.getAt(1, 100));
+        assertEquals(Element.BARRIER, board.getAt(-1, 1));
+        assertEquals(Element.BARRIER, board.getAt(1, -1));
+        assertEquals(Element.BARRIER, board.getAt(100, 1));
+        assertEquals(Element.BARRIER, board.getAt(1, 100));
 
-        assertEquals(Elements.BARRIER, board.getAt(pt(-1, 1)));
-        assertEquals(Elements.BARRIER, board.getAt(pt(1, -1)));
-        assertEquals(Elements.BARRIER, board.getAt(pt(100, 1)));
-        assertEquals(Elements.BARRIER, board.getAt(pt(1, 100)));
+        assertEquals(Element.BARRIER, board.getAt(pt(-1, 1)));
+        assertEquals(Element.BARRIER, board.getAt(pt(1, -1)));
+        assertEquals(Element.BARRIER, board.getAt(pt(100, 1)));
+        assertEquals(Element.BARRIER, board.getAt(pt(1, 100)));
     }
 
     @Test
@@ -186,57 +185,57 @@ public class BoardTest {
 
     @Test
     public void shouldWork_countNear() {
-        assertEquals(1, board.countNear(0, 0, Elements.DUST));
-        assertEquals(3, board.countNear(2, 1, Elements.DUST));
-        assertEquals(2, board.countNear(4, 1, Elements.DUST));
+        assertEquals(1, board.countNear(0, 0, Element.DUST));
+        assertEquals(3, board.countNear(2, 1, Element.DUST));
+        assertEquals(2, board.countNear(4, 1, Element.DUST));
 
-        assertEquals(3, board.countNear(1, 7, Elements.BARRIER));
-        assertEquals(5, board.countNear(1, 1, Elements.BARRIER));
-        assertEquals(0, board.countNear(7, 7, Elements.BARRIER));
-        assertEquals(3, board.countNear(7, 1, Elements.BARRIER));
-        assertEquals(3, board.countNear(1, 6, Elements.BARRIER));
+        assertEquals(3, board.countNear(1, 7, Element.BARRIER));
+        assertEquals(5, board.countNear(1, 1, Element.BARRIER));
+        assertEquals(0, board.countNear(7, 7, Element.BARRIER));
+        assertEquals(3, board.countNear(7, 1, Element.BARRIER));
+        assertEquals(3, board.countNear(1, 6, Element.BARRIER));
     }
 
     @Test
     public void shouldWork_countNear_point() {
-        assertEquals(1, board.countNear(pt(0, 0), Elements.DUST));
-        assertEquals(3, board.countNear(pt(2, 1), Elements.DUST));
-        assertEquals(2, board.countNear(pt(4, 1), Elements.DUST));
+        assertEquals(1, board.countNear(pt(0, 0), Element.DUST));
+        assertEquals(3, board.countNear(pt(2, 1), Element.DUST));
+        assertEquals(2, board.countNear(pt(4, 1), Element.DUST));
 
-        assertEquals(3, board.countNear(pt(1, 7), Elements.BARRIER));
-        assertEquals(5, board.countNear(pt(1, 1), Elements.BARRIER));
-        assertEquals(0, board.countNear(pt(7, 7), Elements.BARRIER));
-        assertEquals(3, board.countNear(pt(7, 1), Elements.BARRIER));
-        assertEquals(3, board.countNear(pt(1, 6), Elements.BARRIER));
+        assertEquals(3, board.countNear(pt(1, 7), Element.BARRIER));
+        assertEquals(5, board.countNear(pt(1, 1), Element.BARRIER));
+        assertEquals(0, board.countNear(pt(7, 7), Element.BARRIER));
+        assertEquals(3, board.countNear(pt(7, 1), Element.BARRIER));
+        assertEquals(3, board.countNear(pt(1, 6), Element.BARRIER));
     }
 
     @Test
     public void shouldWork_isAt() {
-        assertEquals(true, board.isAt(3, 1, Elements.DUST));
-        assertEquals(true, board.isAt(2, 1, Elements.DUST));
+        assertEquals(true, board.isAt(3, 1, Element.DUST));
+        assertEquals(true, board.isAt(2, 1, Element.DUST));
 
-        assertEquals(true, board.isAt(3, 1, Elements.VACUUM, Elements.DUST));
-        assertEquals(true, board.isAt(2, 1, Elements.VACUUM, Elements.DUST));
+        assertEquals(true, board.isAt(3, 1, Element.VACUUM, Element.DUST));
+        assertEquals(true, board.isAt(2, 1, Element.VACUUM, Element.DUST));
     }
 
     @Test
     public void shouldWork_isAt_point() {
-        assertEquals(true, board.isAt(pt(3, 1), Elements.DUST));
-        assertEquals(true, board.isAt(pt(2, 1), Elements.DUST));
+        assertEquals(true, board.isAt(pt(3, 1), Element.DUST));
+        assertEquals(true, board.isAt(pt(2, 1), Element.DUST));
 
-        assertEquals(true, board.isAt(pt(3, 1), Elements.VACUUM, Elements.DUST));
-        assertEquals(true, board.isAt(pt(2, 1), Elements.VACUUM, Elements.DUST));
+        assertEquals(true, board.isAt(pt(3, 1), Element.VACUUM, Element.DUST));
+        assertEquals(true, board.isAt(pt(2, 1), Element.VACUUM, Element.DUST));
     }
 
     @Test
     public void shouldWork_isNear() {
-        assertEquals(true, board.isNear(1, 1, Elements.BARRIER));
-        assertEquals(false, board.isNear(5, 5, Elements.BARRIER));
+        assertEquals(true, board.isNear(1, 1, Element.BARRIER));
+        assertEquals(false, board.isNear(5, 5, Element.BARRIER));
     }
 
     @Test
     public void shouldWork_isNear_point() {
-        assertEquals(true, board.isNear(pt(1, 1), Elements.BARRIER));
-        assertEquals(false, board.isNear(pt(5, 5), Elements.BARRIER));
+        assertEquals(true, board.isNear(pt(1, 1), Element.BARRIER));
+        assertEquals(false, board.isNear(pt(5, 5), Element.BARRIER));
     }
 }

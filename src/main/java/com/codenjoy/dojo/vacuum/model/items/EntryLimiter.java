@@ -24,7 +24,7 @@ package com.codenjoy.dojo.vacuum.model.items;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.model.Elements;
+import com.codenjoy.dojo.vacuum.client.Element;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,11 +32,11 @@ import java.util.List;
 import java.util.Map;
 
 import static com.codenjoy.dojo.services.Direction.*;
-import static com.codenjoy.dojo.vacuum.model.Elements.*;
+import static com.codenjoy.dojo.vacuum.client.Element.*;
 
 public class EntryLimiter extends AbstractItem {
 
-    private static final Map<Elements, List<Direction>> elements =
+    private static final Map<Element, List<Direction>> elements =
             new HashMap<>(){{
                 put(LIMITER_LEFT, Arrays.asList(LEFT));
                 put(LIMITER_UP, Arrays.asList(UP));
@@ -48,7 +48,7 @@ public class EntryLimiter extends AbstractItem {
 
     private List<Direction> permitted;
 
-    public EntryLimiter(Point pt, Elements element) {
+    public EntryLimiter(Point pt, Element element) {
         super(pt, element);
         permitted = elements.get(element);
     }

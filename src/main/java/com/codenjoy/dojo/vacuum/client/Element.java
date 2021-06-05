@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.vacuum.model;
+package com.codenjoy.dojo.vacuum.client;
 
 /*-
  * #%L
@@ -25,10 +25,7 @@ package com.codenjoy.dojo.vacuum.model;
 
 import com.codenjoy.dojo.services.printer.CharElements;
 
-/**
- * Тут указана легенда всех возможных объектов на поле и их состояний.
- */
-public enum Elements implements CharElements {
+public enum Element implements CharElements {
 
     NONE(' '),                          // Чистая клетка локации. Проезд облагается штрафом.
                                             // Эффективный пылесос должен меньше гулять по чистым местам и больше убираться.
@@ -68,7 +65,7 @@ public enum Elements implements CharElements {
 
     final char ch;
 
-    Elements(char ch) {
+    Element(char ch) {
         this.ch = ch;
     }
 
@@ -82,8 +79,8 @@ public enum Elements implements CharElements {
         return String.valueOf(ch);
     }
 
-    public static Elements byCode(char ch) {
-        for (Elements el : Elements.values()) {
+    public static Element byCode(char ch) {
+        for (Element el : Element.values()) {
             if (el.ch == ch) {
                 return el;
             }

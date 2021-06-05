@@ -24,11 +24,11 @@ package com.codenjoy.dojo.vacuum.model.items;
 
 
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.model.Elements;
+import com.codenjoy.dojo.vacuum.client.Element;
 
 public class Barrier extends AbstractItem {
 
     public Barrier(Point pt) {
-        super(pt, Elements.BARRIER);
+        super(pt, Element.BARRIER);
     }
 }

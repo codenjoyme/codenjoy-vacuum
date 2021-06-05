@@ -25,18 +25,17 @@ package com.codenjoy.dojo.vacuum.client;
 
 import com.codenjoy.dojo.client.AbstractBoard;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.model.Elements;
 
 import java.util.List;
 
-import static com.codenjoy.dojo.vacuum.model.Elements.*;
+import static com.codenjoy.dojo.vacuum.client.Element.*;
 
 /**
  * Класс, обрабатывающий строковое представление доски.
  * Содержит ряд унаследованных методов {@see AbstractBoard},
  * но ты можешь добавить сюда любые свои методы на их основе.
  */
-public class Board extends AbstractBoard<Elements> {
+public class Board extends AbstractBoard<Element> {
 
     @Override
     protected int inversionY(int y) {
@@ -44,11 +43,11 @@ public class Board extends AbstractBoard<Elements> {
     }
 
     @Override
-    public Elements valueOf(char ch) {
-        return Elements.byCode(ch);
+    public Element valueOf(char ch) {
+        return Element.byCode(ch);
     }
 
-    public Elements getAt(int x, int y) {
+    public Element getAt(int x, int y) {
         if (isOutOfField(x, y)) {
             return BARRIER;
         }

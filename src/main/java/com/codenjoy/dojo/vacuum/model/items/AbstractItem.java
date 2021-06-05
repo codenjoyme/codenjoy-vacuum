@@ -25,20 +25,20 @@ package com.codenjoy.dojo.vacuum.model.items;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
-import com.codenjoy.dojo.vacuum.model.Elements;
+import com.codenjoy.dojo.vacuum.client.Element;
 import com.codenjoy.dojo.vacuum.model.Player;
 
-public abstract class AbstractItem extends PointImpl implements State<Elements, Player> {
+public abstract class AbstractItem extends PointImpl implements State<Element, Player> {
 
-    protected Elements element;
+    protected Element element;
 
-    public AbstractItem(Point pt, Elements element) {
+    public AbstractItem(Point pt, Element element) {
         super(pt);
         this.element = element;
     }
 
     @Override
-    public Elements state(Player player, Object... objects) {
+    public Element state(Player player, Object... objects) {
         return element;
     }
 }

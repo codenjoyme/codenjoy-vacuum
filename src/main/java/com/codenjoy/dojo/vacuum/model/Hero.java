@@ -27,9 +27,10 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.State;
 import com.codenjoy.dojo.services.multiplayer.PlayerHero;
+import com.codenjoy.dojo.vacuum.client.Element;
 import com.codenjoy.dojo.vacuum.services.Event;
 
-public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
+public class Hero extends PlayerHero<Field> implements State<Element, Player> {
 
     private static final int RESTART_ACTION = 0;
 
@@ -128,8 +129,8 @@ public class Hero extends PlayerHero<Field> implements State<Elements, Player> {
     }
 
     @Override
-    public Elements state(Player player, Object... alsoAtPoint) {
-        return Elements.VACUUM;
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.VACUUM;
     }
 
     public boolean win() {

@@ -29,7 +29,7 @@ import com.codenjoy.dojo.vacuum.model.items.*;
 import java.util.List;
 
 import static com.codenjoy.dojo.utils.LevelUtils.getObjects;
-import static com.codenjoy.dojo.vacuum.model.Elements.*;
+import static com.codenjoy.dojo.vacuum.client.Element.*;
 
 public class Level {
 

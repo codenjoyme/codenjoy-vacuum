@@ -36,7 +36,7 @@ import com.codenjoy.dojo.services.settings.Parameter;
 import com.codenjoy.dojo.services.settings.SimpleParameter;
 import com.codenjoy.dojo.vacuum.client.Board;
 import com.codenjoy.dojo.vacuum.services.ai.AISolver;
-import com.codenjoy.dojo.vacuum.model.Elements;
+import com.codenjoy.dojo.vacuum.client.Element;
 import com.codenjoy.dojo.vacuum.model.Player;
 import com.codenjoy.dojo.vacuum.model.VacuumGame;
 import com.codenjoy.dojo.vacuum.model.level.Levels;
@@ -70,7 +70,7 @@ public class GameRunner extends AbstractGameType<GameSettings> {
 
     @Override
     public CharElements[] getPlots() {
-        return Elements.values();
+        return Element.values();
     }
 
     @Override
