@@ -35,7 +35,7 @@ import com.codenjoy.dojo.services.printer.CharElements;
 import com.codenjoy.dojo.services.settings.Parameter;
 import com.codenjoy.dojo.services.settings.SimpleParameter;
 import com.codenjoy.dojo.vacuum.client.Board;
-import com.codenjoy.dojo.vacuum.client.ai.AISolver;
+import com.codenjoy.dojo.vacuum.services.ai.AISolver;
 import com.codenjoy.dojo.vacuum.model.Elements;
 import com.codenjoy.dojo.vacuum.model.Player;
 import com.codenjoy.dojo.vacuum.model.VacuumGame;

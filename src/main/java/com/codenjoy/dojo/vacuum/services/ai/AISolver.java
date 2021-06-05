@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.vacuum.client.ai;
+package com.codenjoy.dojo.vacuum.services.ai;
 
 /*-
  * #%L
