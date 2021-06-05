@@ -27,7 +27,7 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.State;
 import com.codenjoy.dojo.services.multiplayer.PlayerHero;
-import com.codenjoy.dojo.vacuum.client.Element;
+import com.codenjoy.dojo.games.vacuum.Element;
 import com.codenjoy.dojo.vacuum.services.Event;
 
 public class Hero extends PlayerHero<Field> implements State<Element, Player> {

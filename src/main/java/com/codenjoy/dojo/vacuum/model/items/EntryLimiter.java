@@ -24,7 +24,7 @@ package com.codenjoy.dojo.vacuum.model.items;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.client.Element;
+import com.codenjoy.dojo.games.vacuum.Element;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.codenjoy.dojo.services.Direction.*;
-import static com.codenjoy.dojo.vacuum.client.Element.*;
+import static com.codenjoy.dojo.games.vacuum.Element.*;
 
 public class EntryLimiter extends AbstractItem {
 

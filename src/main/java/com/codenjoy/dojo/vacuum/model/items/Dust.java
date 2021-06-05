@@ -23,7 +23,7 @@ package com.codenjoy.dojo.vacuum.model.items;
  */
 
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.vacuum.client.Element;
+import com.codenjoy.dojo.games.vacuum.Element;
 
 public class Dust extends AbstractItem {
 

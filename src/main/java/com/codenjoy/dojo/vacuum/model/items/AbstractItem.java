@@ -25,7 +25,7 @@ package com.codenjoy.dojo.vacuum.model.items;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
-import com.codenjoy.dojo.vacuum.client.Element;
+import com.codenjoy.dojo.games.vacuum.Element;
 import com.codenjoy.dojo.vacuum.model.Player;
 
 public abstract class AbstractItem extends PointImpl implements State<Element, Player> {

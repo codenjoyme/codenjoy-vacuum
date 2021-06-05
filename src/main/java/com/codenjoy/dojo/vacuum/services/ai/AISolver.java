@@ -28,7 +28,7 @@ import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.algs.DeikstraFindWay;
-import com.codenjoy.dojo.vacuum.client.Board;
+import com.codenjoy.dojo.games.vacuum.Board;
 
 import java.util.Arrays;
 import java.util.Collections;
