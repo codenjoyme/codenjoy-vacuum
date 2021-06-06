@@ -89,10 +89,10 @@ public class AISolver implements Solver<Board> {
 //        Point atUp = Direction.UP.change(me);
 //        Point atDown = Direction.DOWN.change(me);
 //
-//        return board.isAt(atLeft.getX(), atLeft.getY(), Elements.DUST, Elements.BARRIER, Elements.OTHER_HERO) &&
-//                board.isAt(atRight.getX(), atRight.getY(), Elements.DUST, Elements.BARRIER, Elements.OTHER_HERO) &&
-//                board.isAt(atUp.getX(), atUp.getY(), Elements.DUST, Elements.BARRIER, Elements.OTHER_HERO) &&
-//                board.isAt(atDown.getX(), atDown.getY(), Elements.DUST, Elements.BARRIER, Elements.OTHER_HERO);
+//        return board.isAt(atLeft.getX(), atLeft.getY(), Element.DUST, Element.BARRIER, Element.OTHER_HERO) &&
+//                board.isAt(atRight.getX(), atRight.getY(), Element.DUST, Element.BARRIER, Element.OTHER_HERO) &&
+//                board.isAt(atUp.getX(), atUp.getY(), Element.DUST, Element.BARRIER, Element.OTHER_HERO) &&
+//                board.isAt(atDown.getX(), atDown.getY(), Element.DUST, Element.BARRIER, Element.OTHER_HERO);
         return true;
     }
 }
